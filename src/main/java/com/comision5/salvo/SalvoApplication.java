@@ -26,7 +26,7 @@ public class SalvoApplication {
 			playerRepository.save(new Player("David@Palmer.com"));
 			playerRepository.save(new Player("Michelle@Dessler.com"));
 
-			gameRepository.save(new Game(new Date()));
+			gameRepository.save(new Game());
 			System.out.println();
 		};
 	}
