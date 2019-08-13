@@ -1,5 +1,6 @@
 package com.comision5.salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -43,6 +44,7 @@ public class GamePlayer {
         this.joinDate = joinDate;
     }
 
+    @JsonIgnore
     public Player getPlayer() {
         return player;
     }
@@ -51,6 +53,8 @@ public class GamePlayer {
         this.player = player;
     }
 
+
+    @JsonIgnore
     public Game getGame() {
         return game;
     }
