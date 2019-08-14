@@ -19,16 +19,14 @@ public class SalvoApplication {
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,	GamePlayerRepository gamePlayerRepository) {
 		return (args) -> {
 			// save a couple of customers
-			Player player1 = new Player("david@gmail.com");
+			Player player1 = new Player("j.bauer@ctu.gov");
 			playerRepository.save(player1);
-			Player player2 = new Player( "Chloe@Obrian.com");
+			Player player2 = new Player( "c.obrian@ctu.gov");
 			playerRepository.save(player2);
-			Player player3 = new Player("Kim@Bauer.com");
+			Player player3 = new Player("kim_bauer@gmail.com");
 			playerRepository.save(player3);
-			Player player4 = new Player("David@Palmer.com");
+			Player player4 = new Player("t.almeida@ctu.gov");
 			playerRepository.save(player4);
-			Player player5 = new Player("Michelle@Dessler.com");
-			playerRepository.save(player5);
 
 			Game game1 = new Game( new Date());
 			gameRepository.save(game1);
@@ -43,7 +41,7 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayer2);
 			GamePlayer gamePlayer3 = new GamePlayer(new Date(), player1, game3);
 			gamePlayerRepository.save(gamePlayer3);
-			GamePlayer gamePlayer4 = new GamePlayer(new Date(), player5, game3);
+			GamePlayer gamePlayer4 = new GamePlayer(new Date(), player4, game3);
 			gamePlayerRepository.save(gamePlayer4);
 			GamePlayer gamePlayer5 = new GamePlayer(new Date(), player2, game1);
 			gamePlayerRepository.save(gamePlayer5);
