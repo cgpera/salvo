@@ -3,10 +3,7 @@ package com.comision5.salvo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Game {
@@ -18,7 +15,7 @@ public class Game {
     private Date creationDate;
 
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
+    Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>();
 
     public Game() {}
 

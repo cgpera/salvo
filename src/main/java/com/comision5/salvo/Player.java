@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Player {
@@ -17,7 +19,7 @@ public class Player {
     private String userName;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
+    Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>();
 
     public Player() { }
 
