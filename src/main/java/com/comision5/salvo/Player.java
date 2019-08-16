@@ -39,11 +39,12 @@ public class Player {
         this.userName = userName;
     }
 
-    public List<GamePlayer> getGamePlayers() {
+    public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
 
-    public void setGamePlayers(List<GamePlayer> gamePlayers) {
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
         this.gamePlayers = gamePlayers;
     }
+
 }
