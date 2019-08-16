@@ -87,8 +87,6 @@ public class SalvoApplication {
 			GamePlayer gamePlayer84 = new GamePlayer(new Date(), player4, game8);
 			gamePlayerRepository.save(gamePlayer84);
 
-
-
 			System.out.println();
 		};
 	}
