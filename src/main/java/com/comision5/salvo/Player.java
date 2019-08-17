@@ -19,7 +19,7 @@ public class Player {
     private String userName;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>();
+    private Set<GamePlayer> gamePlayers = new HashSet<>();
 
     public Player() { }
 
@@ -27,7 +27,7 @@ public class Player {
         this.userName = userName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

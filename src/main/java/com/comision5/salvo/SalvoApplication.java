@@ -28,13 +28,14 @@ public class SalvoApplication {
 			Player player4 = new Player("t.almeida@ctu.gov");
 			playerRepository.save(player4);
 
-			Game game1 = new Game( new Date());
+			Date date = new Date();
+			Game game1 = new Game(date);
 			gameRepository.save(game1);
-			Game game2 = new Game( new Date());
+			Game game2 = new Game(Date.from(date.toInstant().plusSeconds(3600)));
 			gameRepository.save(game2);
-			Game game3 = new Game( new Date());
+			Game game3 = new Game(Date.from(date.toInstant().plusSeconds(7200)));
 			gameRepository.save(game3);
-			Game game4 = new Game( new Date());
+/*			Game game4 = new Game( new Date());
 			gameRepository.save(game4);
 			Game game5 = new Game( new Date());
 			gameRepository.save(game5);
@@ -44,8 +45,8 @@ public class SalvoApplication {
 			gameRepository.save(game7);
 			Game game8 = new Game( new Date());
 			gameRepository.save(game8);
-
-/*			GamePlayer gamePlayer1 = new GamePlayer(new Date(), player3, game2);
+*/
+			GamePlayer gamePlayer1 = new GamePlayer(date, player3, game2);
 			gamePlayerRepository.save(gamePlayer1);
 			GamePlayer gamePlayer2 = new GamePlayer(new Date(), player4, game2);
 			gamePlayerRepository.save(gamePlayer2);
@@ -57,35 +58,6 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayer5);
 			GamePlayer gamePlayer6 = new GamePlayer(new Date(), player4, game1);
 			gamePlayerRepository.save(gamePlayer6);
-*/
-			GamePlayer gamePlayer11 = new GamePlayer(new Date(), player1, game1);
-			gamePlayerRepository.save(gamePlayer11);
-			GamePlayer gamePlayer12 = new GamePlayer(new Date(), player2, game1);
-			gamePlayerRepository.save(gamePlayer12);
-			GamePlayer gamePlayer21 = new GamePlayer(new Date(), player1, game2);
-			gamePlayerRepository.save(gamePlayer21);
-			GamePlayer gamePlayer22 = new GamePlayer(new Date(), player2, game2);
-			gamePlayerRepository.save(gamePlayer22);
-			GamePlayer gamePlayer32 = new GamePlayer(new Date(), player2, game3);
-			gamePlayerRepository.save(gamePlayer32);
-			GamePlayer gamePlayer34 = new GamePlayer(new Date(), player4, game3);
-			gamePlayerRepository.save(gamePlayer34);
-			GamePlayer gamePlayer41 = new GamePlayer(new Date(), player1, game4);
-			gamePlayerRepository.save(gamePlayer41);
-			GamePlayer gamePlayer42 = new GamePlayer(new Date(), player2, game4);
-			gamePlayerRepository.save(gamePlayer42);
-			GamePlayer gamePlayer54 = new GamePlayer(new Date(), player4, game5);
-			gamePlayerRepository.save(gamePlayer54);
-			GamePlayer gamePlayer51 = new GamePlayer(new Date(), player1, game5);
-			gamePlayerRepository.save(gamePlayer51);
-			GamePlayer gamePlayer63 = new GamePlayer(new Date(), player3, game6);
-			gamePlayerRepository.save(gamePlayer63);
-			GamePlayer gamePlayer74 = new GamePlayer(new Date(), player4, game7);
-			gamePlayerRepository.save(gamePlayer74);
-			GamePlayer gamePlayer83 = new GamePlayer(new Date(), player3, game8);
-			gamePlayerRepository.save(gamePlayer83);
-			GamePlayer gamePlayer84 = new GamePlayer(new Date(), player4, game8);
-			gamePlayerRepository.save(gamePlayer84);
 
 			System.out.println();
 		};
