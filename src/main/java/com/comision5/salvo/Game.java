@@ -23,7 +23,7 @@ public class Game {
         this.creationDate = creationDate;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,4 +42,14 @@ public class Game {
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
+
+
+/*    public Map<String, Object> gameToDTO() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", getId());
+        dto.put("username", getGamePlayers());
+        dto.put("gamePlayers", )
+        return dto;
+    }
+*/
 }
