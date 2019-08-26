@@ -44,8 +44,7 @@ public List<Map<String, Object>> getGames() {
     private Map<String, Object> makeGameDTO(Game game) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", game.getId());
-        dto.put("created", game.getCreationDate());
-        //dto.put("gamePlayers", game.getGamePlayers());
+        dto.put("created", game.getCreationDate().getTime());
         dto.put("gamePlayers", getGamePlayerListDTO((Set<GamePlayer>) game.getGamePlayers()));
         return dto;
     }
@@ -61,7 +60,7 @@ public List<Map<String, Object>> getGames() {
     private Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", gamePlayer.getId());
-        dto.put("joinDate", gamePlayer.getJoinDate());
+        dto.put("joinDate", gamePlayer.getJoinDate().getTime());
         dto.put("player", makePlayerDTO(gamePlayer.getPlayer()));
         return dto;
     }
