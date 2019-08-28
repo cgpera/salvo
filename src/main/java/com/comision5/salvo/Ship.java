@@ -22,22 +22,17 @@ public class Ship {
   private long id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "gamePlayer_id")
-  private GamePlayer gamePlayerID;
-
-  @OneToMany(mappedBy = "shipLocation", fetch = FetchType.EAGER)
-  private Set<ShipLocation> shipLocations = new HashSet<>();
+  @JoinColumn(name = "gamePlayerID")
+  private GamePlayer gamePlayer;
 
   public Ship(){};
 
-  public Ship(GamePlayer gamePlayerID) {
-    this.gamePlayerID = gamePlayerID;
+  public Ship(GamePlayer gamePlayer) {
+    this.gamePlayer = gamePlayer;
   }
 
   public Long getId() {
     return id;
 }
-
-
 
 };
