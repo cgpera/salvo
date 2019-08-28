@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,7 +30,7 @@ public class Ship {
 
   public Ship(){};
 
-  public Ship(Long gamePlayerID) {
+  public Ship(GamePlayer gamePlayerID) {
     this.gamePlayerID = gamePlayerID;
   }
 

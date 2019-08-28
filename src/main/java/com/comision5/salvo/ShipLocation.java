@@ -1,3 +1,5 @@
+package com.comision5.salvo;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
