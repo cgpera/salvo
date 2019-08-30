@@ -32,9 +32,11 @@ public class GamePlayer {
     public GamePlayer(){}
 
     public GamePlayer(Date joinDate, Player player, Game game) {
+        //this.id = id;
         this.joinDate = joinDate;
         this.player = player;
         this.game = game;
+//        this.ships = ships;
     }
 
     public long getId() {
@@ -58,8 +60,12 @@ public class GamePlayer {
         this.player = player;
     }
 
+    public void setShip(Set<Ship> ship) {
+        this.ship = ship;
+    }
+
     public Set<Ship> getShips() {
-        return ships;
+        return ship;
     }
 
     @JsonIgnore
