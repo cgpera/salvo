@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class GamePlayer {
@@ -23,6 +25,9 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @OneToMany(mappedBy = "ship", fetch = FetchType.EAGER)
+    private Set<Ship> ships = new HashSet<>();
 
     public GamePlayer(){}
 
@@ -53,6 +58,9 @@ public class GamePlayer {
         this.player = player;
     }
 
+    public Set<Ship> getShips() {
+        return ships;
+    }
 
     @JsonIgnore
     public Game getGame() {

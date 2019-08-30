@@ -1,6 +1,7 @@
 package com.comision5.salvo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,14 +50,13 @@ public List<Map<String, Object>> getGames() {
         return dto;
     }
 
-
-    // Fijate si lo que te devuelve game.getGamePlayers es un set o un list ??
     private List<Map<String, Object>> getGamePlayerListDTO(Set<GamePlayer> gamePlayers) {
         return gamePlayers
                 .stream()
                 .map(gamePlayerList ->  makeGamePlayerDTO(gamePlayerList))
                 .collect(Collectors.toList());
     }
+
     private Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", gamePlayer.getId());
@@ -72,4 +72,12 @@ public List<Map<String, Object>> getGames() {
         return dto;
     }
 
+
+
+/*@RequestMapping("/game_view/{gameId}")
+public String findGame(@PathVariable Long gameId) {
+    Game game = GameRepository.findById(gameId).orElse(null);
+    Map<String, Object> dto = new LinkedHashMap<>();
+
+}*/
 }
