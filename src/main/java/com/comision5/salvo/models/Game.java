@@ -1,9 +1,10 @@
-package com.comision5.salvo;
+package com.comision5.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Game {
@@ -43,13 +44,11 @@ public class Game {
         return gamePlayers;
     }
 
-
-/*    public Map<String, Object> gameToDTO() {
+    public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", getId());
-        dto.put("username", getGamePlayers());
-        dto.put("gamePlayers", )
+        dto.put("id", this.getId());
+        dto.put("created", this.getCreationDate());
+        dto.put("gamePlayers", this.gamePlayers.stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
         return dto;
     }
-*/
 }

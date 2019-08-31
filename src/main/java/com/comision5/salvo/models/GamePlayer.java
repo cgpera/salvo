@@ -1,12 +1,14 @@
-package com.comision5.salvo;
+package com.comision5.salvo.models;
 
+import com.comision5.salvo.models.Game;
+import com.comision5.salvo.models.Player;
+import com.comision5.salvo.models.Ship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -19,15 +21,15 @@ public class GamePlayer {
     private Date joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "playerID")
     private Player player;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "game_id")
+    @JoinColumn(name = "gameID")
     private Game game;
 
-    @OneToMany(mappedBy = "ship", fetch = FetchType.EAGER)
-    private Set<Ship> ships = new HashSet<>();
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    private Set<Ship> ships;
 
     public GamePlayer(){}
 
@@ -60,12 +62,12 @@ public class GamePlayer {
         this.player = player;
     }
 
-    public void setShip(Set<Ship> ship) {
-        this.ship = ship;
+    public Set<Ship> getShips() {
+        return ships;
     }
 
-    public Set<Ship> getShips() {
-        return ship;
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
     }
 
     @JsonIgnore
@@ -76,4 +78,16 @@ public class GamePlayer {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public Map<String, Object> makeGamePlayerDTO() {
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getId());
+        dto.put("joinDate", this.getJoinDate());
+        dto.put("player", this.getPlayer().makePlayerDTO());
+        return dto;
+    }
+
+
+
+
 }
