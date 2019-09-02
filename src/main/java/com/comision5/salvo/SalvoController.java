@@ -53,6 +53,6 @@ public class SalvoController {
         dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers()
                                                     .stream()
                                                     .map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO()));
-                                                    return dto;
+        return dto;
     }
 }

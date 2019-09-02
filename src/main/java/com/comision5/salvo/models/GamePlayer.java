@@ -34,11 +34,9 @@ public class GamePlayer {
     public GamePlayer(){}
 
     public GamePlayer(Date joinDate, Player player, Game game) {
-        //this.id = id;
         this.joinDate = joinDate;
         this.player = player;
         this.game = game;
-//        this.ships = ships;
     }
 
     public long getId() {
