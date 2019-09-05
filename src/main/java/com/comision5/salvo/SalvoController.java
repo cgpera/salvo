@@ -52,7 +52,15 @@ public class SalvoController {
         dto.put("created", gamePlayer.getGame().getCreationDate());
         dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers()
                                                     .stream()
-                                                    .map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO()));
+                                                    .map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO())
+                                                    .collect(Collectors.toList())
+        );
+
+        dto.put("ships", gamePlayer.getShips()
+                                    .stream()
+                                    .map(ship -> ship.makeShipDTO())
+                                    .collect(Collectors.toList())
+        );
         return dto;
     }
 }

@@ -60,16 +60,8 @@ public class GamePlayer {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Set<Ship> getShips() {
         return ships;
-    }
-
-    public void setShips(Set<Ship> ships) {
-        this.ships = ships;
     }
 
     @JsonIgnore

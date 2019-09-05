@@ -3,7 +3,7 @@ package com.comision5.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Salvo {
@@ -14,13 +14,21 @@ public class Salvo {
 
     private int turn;
 
-    private Set<String> salvoLocations;
+    @ElementCollection
+    @Column(name="shipLocations")
+    private List<String> salvoLocations;
+//    private Set<String> salvoLocations;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayerID")
     private GamePlayer gamePlayer;
 
-    public Salvo() {
+    public Salvo(){}
+
+    public Salvo(int turn, List<String> salvoLocations, GamePlayer gamePlayer) {
+        this.turn = turn;
+        this.salvoLocations = salvoLocations;
+        this.gamePlayer = gamePlayer;
     }
 
     public long getId() {
@@ -31,7 +39,7 @@ public class Salvo {
         return turn;
     }
 
-    public Set<String> getSalvoLocations() {
+    public List<String> getSalvoLocations() {
         return salvoLocations;
     }
 
