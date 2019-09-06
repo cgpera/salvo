@@ -3,7 +3,9 @@ package com.comision5.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Salvo {
@@ -45,5 +47,12 @@ public class Salvo {
 
     public GamePlayer getGamePlayer() {
         return gamePlayer;
+    }
+
+    public Map<String, Object> MakeSalvoDTO() {
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("turn", this.turn);
+        dto.put("Locations", this.getSalvoLocations());
+        return dto;
     }
 }

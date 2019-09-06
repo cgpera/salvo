@@ -33,16 +33,12 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-
-
     private List<Map<String, Object>> getGamePlayerListDTO(Set<GamePlayer> gamePlayers) {
         return gamePlayers
                 .stream()
                 .map(gamePlayerList ->  gamePlayerList.makeGamePlayerDTO())
                 .collect(Collectors.toList());
     }
-
-
 
     @RequestMapping("/game_view/{nn}")
     public Map<String, Object> GetGameByGamePlayerID(@PathVariable Long nn){
@@ -55,12 +51,18 @@ public class SalvoController {
                                                     .map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO())
                                                     .collect(Collectors.toList())
         );
-
         dto.put("ships", gamePlayer.getShips()
                                     .stream()
                                     .map(ship -> ship.makeShipDTO())
                                     .collect(Collectors.toList())
         );
+/*
+        dto.put("salvoes", gamePlayer.getGame().getGamePlayers().
+                                    .stream()
+                                    .map((salvo -> salvo.makeSalvoDTO())))
+                                    .collect(Collectors.toList())*/
+
         return dto;
     }
+
 }
