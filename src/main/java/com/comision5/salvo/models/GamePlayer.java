@@ -1,14 +1,10 @@
 package com.comision5.salvo.models;
 
-import com.comision5.salvo.models.Game;
-import com.comision5.salvo.models.Player;
-import com.comision5.salvo.models.Ship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -32,7 +28,7 @@ public class GamePlayer {
     private Set<Ship> ships;
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    private Set<Ship> salvoes;
+    private Set<Salvo> salvoes;
 
 
     public GamePlayer(){}
@@ -73,8 +69,7 @@ public class GamePlayer {
         this.game = game;
     }
 
-
-    public Set<Ship> getSalvoes() {
+    public Set<Salvo> getSalvoes() {
         return salvoes;
     }
 

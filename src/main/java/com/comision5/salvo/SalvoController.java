@@ -56,11 +56,12 @@ public class SalvoController {
                                     .map(ship -> ship.makeShipDTO())
                                     .collect(Collectors.toList())
         );
-/*
-        dto.put("salvoes", gamePlayer.getGame().getGamePlayers().
+
+        dto.put("salvoes", gamePlayer.getSalvoes()
                                     .stream()
-                                    .map((salvo -> salvo.makeSalvoDTO())))
-                                    .collect(Collectors.toList())*/
+                                    .map(salvo -> salvo.makeSalvoDTO())
+                                    .collect(Collectors.toList())
+        );
 
         return dto;
     }
