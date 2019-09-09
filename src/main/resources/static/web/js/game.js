@@ -20,7 +20,7 @@ function loadData() {
 
       data.ships.forEach(function (shipPiece) {
         shipPiece.locations.forEach(function (shipLocation) {
-          if(isHit(shipLocation,data.salvoes,playerInfo[0].id)  !=  0){
+          if(isHit(shipLocation,data.salvoes,playerInfo[0].id)  !==  0){
             $('#B_' + shipLocation).addClass('ship-piece-hited');
                         $('#B_' + shipLocation).text(isHit(shipLocation,data.salvoes,playerInfo[0].id));
           }
