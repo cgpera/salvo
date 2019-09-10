@@ -18,6 +18,7 @@ function loadData() {
 
       $('#playerInfo').text(playerInfo[0].userName + '(you) vs ' + playerInfo[1].userName);
 
+
       data.ships.forEach(function (shipPiece) {
         shipPiece.locations.forEach(function (shipLocation) {
           if(isHit(shipLocation,data.salvoes,playerInfo[0].id)  !==  0){
@@ -29,10 +30,15 @@ function loadData() {
             $('#B_' + shipLocation).addClass('ship-piece');
         });
       });
+      console.log(data.salvoes, data.salvoes[0].turn, data.salvoes[0].player)
       data.salvoes.forEach(function (salvo) {
+          turno = salvo.turn
         if (playerInfo[0].id === salvo.player) {
+            console.log(salvo.turn)
           salvo.locations.forEach(function (location) {
+//              console.log("locations", location.)
             $('#S_' + location).addClass('salvo-piece');
+              $('#S_' + location).text(turno);
           });
         } else {
           salvo.locations.forEach(function (location) {
@@ -52,7 +58,7 @@ function isHit(shipLocation,salvoes,playerId) {
     if(salvo.player !== playerId)
       salvo.locations.forEach(function (location) {
         if(shipLocation === location)
-          turn = salvo.turn;
+            turn = salvo.turn
       });
   });
   return turn;
