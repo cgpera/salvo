@@ -18,6 +18,9 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    private Set<Score> scores;
+
     public Game() {}
 
     public Game(Date creationDate) {
@@ -42,6 +45,10 @@ public class Game {
 
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
     }
 
     public Map<String, Object> makeGameDTO() {

@@ -18,7 +18,7 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,	GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository) {
+	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,	GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
 		return (args) -> {
 			// save a couple of customers
 			Player player1 = new Player("j.bauer@ctu.gov");
@@ -184,6 +184,21 @@ public class SalvoApplication {
 			salvoRepository.save(s20);
 			salvoRepository.save(s21);
 			salvoRepository.save(s22);
+
+
+			Score sc1 = new Score((float) 1, new Date(), 1, 1);
+			Score sc2 = new Score((float) 0, new Date(), 1, 2);
+			Score sc3 = new Score((float) 0.5, new Date(), 2, 1);
+			Score sc4 = new Score((float) 0.5, new Date(), 2, 2);
+			Score sc5 = new Score((float) 0.5, new Date(), 3, 2);
+			Score sc6 = new Score((float) 0.5, new Date(), 3, 4);
+			Score sc7 = new Score((float) 0, new Date(), 4, 2);
+			Score sc8 = new Score((float) 1, new Date(), 4, 1);
+//			Score sc9 = new Score((float) 1, new Date(), 5, 1);
+//			Score sc10 = new Score((float) 0, new Date(), 5, 2);
+
+
+
 
 
 			System.out.println();

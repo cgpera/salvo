@@ -12,7 +12,7 @@ public class Score {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private int score;
+    private float score;
 
     private Date finishDate;
 
@@ -24,9 +24,9 @@ public class Score {
     @JoinColumn(name = "playerID")
     private Player player;
 
-    public Score(){};
+    public Score(float score, Date finishDate, int i, int i1){};
 
-    public Score(int score, Date finishDate, Game game, Player player) {
+    public Score(float score, Date finishDate, Game game, Player player) {
         this.score = score;
         this.finishDate = finishDate;
         this.game = game;
@@ -37,7 +37,7 @@ public class Score {
         return id;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 
