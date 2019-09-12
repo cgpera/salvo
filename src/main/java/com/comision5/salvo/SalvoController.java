@@ -43,6 +43,9 @@ public class SalvoController {
     @RequestMapping("/game_view/{nn}")
     public Map<String, Object> GetGameByGamePlayerID(@PathVariable Long nn){
         GamePlayer gamePlayer = gamePlayerRepository.findById(nn).get();
+        System.out.println(nn);
+        System.out.println(gamePlayer.getId());
+        System.out.println(gamePlayer.getGame().getId());
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", gamePlayer.getGame().getId());
         dto.put("created", gamePlayer.getGame().getCreationDate());
@@ -68,4 +71,11 @@ public class SalvoController {
         return dto;
     }
 
+    @RequestMapping("/leaderBoard")
+    public  List<Map<String, Object>> leaderBoard() {
+        return playerRepository.findAll()
+                .stream()
+                .map(Player::makePlayerScoreDTO)
+                .collect(Collectors.toList());
+    }
 }

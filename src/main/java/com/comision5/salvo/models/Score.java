@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Entity
 public class Score {
@@ -12,7 +14,7 @@ public class Score {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private float score;
+    private double score;
 
     private Date finishDate;
 
@@ -24,9 +26,9 @@ public class Score {
     @JoinColumn(name = "playerID")
     private Player player;
 
-    public Score(float score, Date finishDate, int i, int i1){};
+    public Score(){};
 
-    public Score(float score, Date finishDate, Game game, Player player) {
+    public Score(double score, Date finishDate, Game game, Player player) {
         this.score = score;
         this.finishDate = finishDate;
         this.game = game;
@@ -37,7 +39,7 @@ public class Score {
         return id;
     }
 
-    public float getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -52,4 +54,5 @@ public class Score {
     public Player getPlayer() {
         return player;
     }
+
 }

@@ -17,7 +17,7 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
-    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<Score> scores;
 
     public Player() { }
@@ -55,6 +55,40 @@ public class Player {
         dto.put("id", this.getId());
         dto.put("userName", this.getUserName());
         return dto;
+    }
+
+    public Map<String,Object> makePlayerScoreDTO(){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        Map<String, Object> score = new LinkedHashMap<>();
+        dto.put("id", this.getId());
+        dto.put("email", this.getUserName());
+        dto.put("scores", score);
+        score.put("total", this.getTotalScore());
+        score.put("won", this.getWinScore());
+        score.put("lost", this.getLostScore());
+        score.put("tied", this.getTiedScore());
+        return  dto;
+    }
+    public Double getTotalScore(){
+        return this.getWinScore() * 1.0D + this.getTiedScore() * 0.5D;
+    }
+
+    public long  getWinScore(){
+        return this.getScores().stream()
+                .filter(score -> score.getScore() == 1.0D)
+                .count();
+    }
+
+    public long  getLostScore(){
+        return this.getScores().stream()
+                .filter(score -> score.getScore() == 0.0D)
+                .count();
+    }
+
+    public long  getTiedScore(){
+        return this.getScores().stream()
+                .filter(score -> score.getScore() == 0.5D)
+                .count();
     }
 
 }

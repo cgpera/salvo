@@ -186,20 +186,26 @@ public class SalvoApplication {
 			salvoRepository.save(s22);
 
 
-			Score sc1 = new Score((float) 1, new Date(), 1, 1);
-			Score sc2 = new Score((float) 0, new Date(), 1, 2);
-			Score sc3 = new Score((float) 0.5, new Date(), 2, 1);
-			Score sc4 = new Score((float) 0.5, new Date(), 2, 2);
-			Score sc5 = new Score((float) 0.5, new Date(), 3, 2);
-			Score sc6 = new Score((float) 0.5, new Date(), 3, 4);
-			Score sc7 = new Score((float) 0, new Date(), 4, 2);
-			Score sc8 = new Score((float) 1, new Date(), 4, 1);
-//			Score sc9 = new Score((float) 1, new Date(), 5, 1);
-//			Score sc10 = new Score((float) 0, new Date(), 5, 2);
+			Score sc1 = new Score(1.0D, new Date(), game1, player1);
+			Score sc2 = new Score(0.0D, new Date(), game1, player2);
+			Score sc3 = new Score(0.5D, new Date(), game2, player1);
+			Score sc4 = new Score(0.5D, new Date(), game2, player2);
+			Score sc5 = new Score(1.0D, new Date(), game3, player2);
+			Score sc6 = new Score(0.0D, new Date(), game3, player4);
+			Score sc7 = new Score(0.5D, new Date(), game4, player2);
+			Score sc8 = new Score(0.5D, new Date(), game4, player1);
+//			Score sc9 = new Score((double) 1, new Date(), 5, 1);
+//			Score sc10 = new Score((double) 0, new Date(), 5, 2);
 
-
-
-
+			scoreRepository.save(sc1);
+			scoreRepository.save(sc2);
+			scoreRepository.save(sc3);
+			scoreRepository.save(sc4);
+			scoreRepository.save(sc5);
+			scoreRepository.save(sc6);
+			scoreRepository.save(sc7);
+			scoreRepository.save(sc8);
+//			scoreRepository.save(sc1);
 
 			System.out.println();
 		};
