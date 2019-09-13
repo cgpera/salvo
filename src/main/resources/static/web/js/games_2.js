@@ -12,10 +12,10 @@ function updateViewGames(data) {
 function updateViewLBoard(data) {
   var htmlList = data.map(function (score) {
       return  '<tr><td>' + score.email + '</td>'
-              + '<td>' + score.score.total + '</td>'
-              + '<td>' + score.score.won + '</td>'
-              + '<td>' + score.score.lost + '</td>'
-              + '<td>' + score.score.tied + '</td></tr>';
+              + '<td>' + score.scores.total + '</td>'
+              + '<td>' + score.scores.won + '</td>'
+              + '<td>' + score.scores.lost + '</td>'
+              + '<td>' + score.scores.tied + '</td></tr>';
   }).join('');
   document.getElementById("leader-list").innerHTML = htmlList;
 }
@@ -23,7 +23,7 @@ function updateViewLBoard(data) {
 function loadData() {
   $.get("/api/games")
     .done(function(data) {
-      updateViewGames(data.games);
+      updateViewGames(data);
     })
     .fail(function( jqXHR, textStatus ) {
       alert( "Failed: " + textStatus );
@@ -31,6 +31,7 @@ function loadData() {
   
   $.get("/api/leaderBoard")
     .done(function(data) {
+        console.log(data)
       updateViewLBoard(data);
     })
     .fail(function( jqXHR, textStatus ) {
