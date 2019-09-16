@@ -10,7 +10,7 @@ var url = '/api/game_view/' + getParameterByName('gp')
 
   $.get(url, function (respuesta) {
     var items = [];
-    console.log(JSON.stringify(respuesta))
+    console.log(respuesta)
       items.push("<div class='divider'></div><div class='section'>");
 //      items.push("<h5 class='blue-text text-darken-2'>Game " + key + "</h5>")
     $.each(respuesta, function (key, val) {
