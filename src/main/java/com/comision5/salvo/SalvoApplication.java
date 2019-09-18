@@ -3,10 +3,12 @@ package com.comision5.salvo;
 
 
 import com.comision5.salvo.models.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -21,13 +23,13 @@ public class SalvoApplication {
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,	GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
 		return (args) -> {
 			// save a couple of customers
-			Player player1 = new Player("j.bauer@ctu.gov");
+			Player player1 = new Player("j.bauer@ctu.gov", "24");
 			playerRepository.save(player1);
-			Player player2 = new Player( "c.obrian@ctu.gov");
+			Player player2 = new Player( "c.obrian@ctu.gov", "42");
 			playerRepository.save(player2);
-			Player player3 = new Player("kim_bauer@gmail.com");
+			Player player3 = new Player("kim_bauer@gmail.com", "kb");
 			playerRepository.save(player3);
-			Player player4 = new Player("t.almeida@ctu.gov");
+			Player player4 = new Player("t.almeida@ctu.gov", "mole");
 			playerRepository.save(player4);
 
 			Date date = new Date();
@@ -194,8 +196,6 @@ public class SalvoApplication {
 			Score sc6 = new Score(0.0D, new Date(), game3, player4);
 			Score sc7 = new Score(0.5D, new Date(), game4, player2);
 			Score sc8 = new Score(0.5D, new Date(), game4, player1);
-//			Score sc9 = new Score((double) 1, new Date(), 5, 1);
-//			Score sc10 = new Score((double) 0, new Date(), 5, 2);
 
 			scoreRepository.save(sc1);
 			scoreRepository.save(sc2);
@@ -205,9 +205,31 @@ public class SalvoApplication {
 			scoreRepository.save(sc6);
 			scoreRepository.save(sc7);
 			scoreRepository.save(sc8);
-//			scoreRepository.save(sc1);
 
 			System.out.println();
 		};
 	}
 }
+/*
+@Configuration
+class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
+
+	@Autowired
+	PlayerRepository playerRepository;
+
+	@Override
+	public void init(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(inputName-> {
+			Player player = playerRepository.findByEmail(inputName);
+			if (player != null) {
+				return new Player(player.getUserName(), player.getPassword(),
+						AuthorityUtils.createAuthorityList("USER"));
+			} else {
+				throw new UsernameNotFoundException("Unknown user: " + inputName);
+			}
+		});
+	}
+}
+
+
+*/
