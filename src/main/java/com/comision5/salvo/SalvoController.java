@@ -4,6 +4,7 @@ import com.comision5.salvo.models.Game;
 import com.comision5.salvo.models.GamePlayer;
 import com.comision5.salvo.models.Player;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class SalvoController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private GameRepository repo;

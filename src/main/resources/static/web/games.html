@@ -9,6 +9,17 @@
 <body>
   <div class="container">
     <div class="row">
+      <form id="login-form" onsubmit="login()">
+        <label>Name: <input type="text" name="username"></label>
+        <label>Password: <input type="text" name="password"></label>
+        <button>Log in</button>
+      </form>
+      <form id="logout-form" onsubmit="return false">
+        <button>Log out</button>
+      </form>
+    </div>
+
+    <div class="row">
       <div class="col">
         <ol class="list-group" id="game-list">
         </ol>

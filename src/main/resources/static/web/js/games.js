@@ -6,10 +6,10 @@ $(function() {
 });
 
 function updateViewGames(data) {
-
+    console.log(data)
   var htmlList = data.games.map(function (game) {
       return  '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
-      + game.gamePlayers.map(function(element) { return element.player.email}).join(', ') + '</li>';
+      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
   }).join('');
   document.getElementById("game-list").innerHTML = htmlList;
 }
@@ -112,4 +112,31 @@ function loadData() {
     .fail(function( jqXHR, textStatus ) {
       alert( "Failed: " + textStatus );
     });
+}
+
+function login(evt) {
+    evt.preventDefault();
+    var form = evt.target.form;
+    $.post("/app/login",
+        { name: form["username"].value,
+            pwd: form["password"].value })
+        .done(function(data) {
+            console.log(data.status);
+        })
+        .fail(function( jqXHR, textStatus ) {
+            alert( "Failed: " + textStatus );
+        });
+
+}
+
+function logout(evt) {
+    evt.preventDefault();
+    $.post("/app/logout")
+        .done(function(data) {
+            console.log(data.status)
+        })
+        .fail(function( jqXHR, textStatus ) {
+            alert( "Failed: " + textStatus );
+        });
+
 }
