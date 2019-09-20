@@ -110,14 +110,31 @@ function loadData() {
     .done(function(data) {
       updateViewGames(data);
       //gamesData = data.games;
-      gamesData = data
+/*      gamesData = data
       playersArray  =   getPlayers(gamesData);
       console.log(playersArray)
       playersArray  =   addScoresToPlayersArray(playersArray,gamesData);
-      console.log(playersArray)
+      console.log(playersArray)*/
 
-      showScoreBoard(playersArray);
+//      showScoreBoard(playersArray);
     })
+    .fail(function( jqXHR, textStatus ) {
+      alert( "Failed: " + textStatus );
+    });
+
+  $.get("/api/leaderBoard")
+    .done(function(respuesta) {
+      let row = $('<tr></tr>').appendTo("#leaderList");
+      $.each(respuesta, function(key, data2) {
+      console.log(data2.scores, data2.scores.won, data2.scores.lost, data2.scores.total)
+        $('<td>' + data2.email + '</td>').appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.total.toFixed(1) + '</td>').appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.won + '</td>').appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.lost + '</td>').appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.tied + '</td>').appendTo(row);
+//        console.log(row)
+      })
+      })
     .fail(function( jqXHR, textStatus ) {
       alert( "Failed: " + textStatus );
     });
