@@ -37,17 +37,18 @@ public class SalvoApplication {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
+
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,	GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
 		return (args) -> {
 			// save a couple of customers
-			Player player1 = new Player("j.bauer@ctu.gov", "24");
+			Player player1 = new Player("j.bauer@ctu.gov", passwordEncoder().encode("24"));
 			playerRepository.save(player1);
-			Player player2 = new Player( "c.obrian@ctu.gov", "42");
+			Player player2 = new Player( "c.obrian@ctu.gov", passwordEncoder().encode("42"));
 			playerRepository.save(player2);
-			Player player3 = new Player("kim_bauer@gmail.com", "kb");
+			Player player3 = new Player("kim_bauer@gmail.com", passwordEncoder().encode("kb"));
 			playerRepository.save(player3);
-			Player player4 = new Player("t.almeida@ctu.gov", "mole");
+			Player player4 = new Player("t.almeida@ctu.gov", passwordEncoder().encode("mole"));
 			playerRepository.save(player4);
 
 			Date date = new Date();
@@ -256,18 +257,18 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/api/games").permitAll()
-				.antMatchers("/api/**").permitAll()
+				.antMatchers("/api/*").permitAll()
 				.antMatchers("/web/**").permitAll()
 				.antMatchers("/rest/**").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.antMatchers("/**").hasAuthority("USER")
-				.and();
+				.anyRequest().permitAll();
 				http.formLogin()
 				.usernameParameter("name")
 				.passwordParameter("pwd")
-				.loginPage("/app/login");
+				.loginPage("/api/login");
 
-		http.logout().logoutUrl("/app/logout");
+		http.logout().logoutUrl("/api/logout");
 		// turn off checking for CSRF tokens
 		http.csrf().disable();
 

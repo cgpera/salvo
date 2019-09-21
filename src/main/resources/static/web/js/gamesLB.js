@@ -6,11 +6,6 @@ $(function() {
 });
 
 function updateViewGames(data) {
-
-/*  var htmlList = data.games.map(function (game) {
-      return  '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
-      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
-  }).join('');*/
     var htmlList = data.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
@@ -18,105 +13,11 @@ function updateViewGames(data) {
   document.getElementById("game-list").innerHTML = htmlList;
 }
 
-function getPlayers(data) {
-
-  let players = [];
-  let playersIds = [];
-
-  for (let i = 0; i < data.length; i++) {
-
-      for (let j = 0; j < data[i].gamePlayers.length; j++) {
-
-          if (!playersIds.includes(data[i].gamePlayers[j].player.id)) {
-              playersIds.push(data[i].gamePlayers[j].player.id);
-
-              let playerScoreData = {
-                  "id": data[i].gamePlayers[j].player.id,
-                  "email": data[i].gamePlayers[j].player.userName,
-                  "scores": [],
-                  "total": 0.0
-              };
-              players.push(playerScoreData);
-
-          }
-      }
-  }
-  return players;
-}
-
-function addScoresToPlayersArray(players, data) {
-
-  for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data[i].scores.length; j++) {
-
-                  if(data[i].scores[j]  != null){
-                    let scorePlayerId = data[i].scores[j].player;
-
-                                      for (let k = 0; k < players.length; k++) {
-
-                                          if (players[k].id == scorePlayerId) {
-                                              players[k].scores.push(data[i].scores[j].score);
-                                              players[k].total += data[i].scores[j].score;
-                                          }
-                                      }
-                  }
-
-              }
-
-
-  }
-
-  return players;
-}
-
-function showScoreBoard(players) {
-
-  players.sort(function (a, b) {
-      return b.total - a.total;
-  });
-
-  let table = "#leader-list";
-  $(table).empty();
-
-  for (let m = 0; m < players.length; m++) {
-      let countWon = 0;
-      let countLost = 0;
-      let countTied = 0;
-
-      if (players[m].scores.length > 0) {
-
-          for (let n = 0; n < players[m].scores.length; n++) {
-              if (players[m].scores[n] == 0.0) {
-                  countLost++;
-              } else if (players[m].scores[n] == 0.5) {
-                  countTied++;
-              } else if (players[m].scores[n] == 1.0) {
-                  countWon++;
-              }
-          }
-
-          let row = $('<tr></tr>').appendTo(table);
-          $('<td>' + players[m].email + '</td>').appendTo(row);
-          $("<td class='textCenter'>" + players[m].total.toFixed(1) + '</td>').appendTo(row);
-          $("<td class='textCenter'>" + countWon + '</td>').appendTo(row);
-          $("<td class='textCenter'>" + countLost + '</td>').appendTo(row);
-          $("<td class='textCenter'>" + countTied + '</td>').appendTo(row);
-      }
-  }
-}
 
 function loadData() {
   $.get("/api/games")
     .done(function(data) {
       updateViewGames(data);
-      //gamesData = data.games;
-/*      gamesData = data
-      playersArray  =   getPlayers(gamesData);
-      console.log(playersArray)
-      playersArray  =   addScoresToPlayersArray(playersArray,gamesData);
-      console.log(playersArray)*/
-
-//      showScoreBoard(playersArray);
     })
     .fail(function( jqXHR, textStatus ) {
       alert( "Failed: " + textStatus );
@@ -124,15 +25,15 @@ function loadData() {
 
   $.get("/api/leaderBoard")
     .done(function(respuesta) {
-      let row = $('<tr></tr>').appendTo("#leaderList");
+//        console.log(respuesta)
+      let row = $('<tr></tr>').appendTo("#leader-List");
       $.each(respuesta, function(key, data2) {
-      console.log(data2.scores, data2.scores.won, data2.scores.lost, data2.scores.total)
+      console.log(data2.email, data2.scores)
         $('<td>' + data2.email + '</td>').appendTo(row);
         $("<td class='textCenter'>" + data2.scores.total.toFixed(1) + '</td>').appendTo(row);
         $("<td class='textCenter'>" + data2.scores.won + '</td>').appendTo(row);
         $("<td class='textCenter'>" + data2.scores.lost + '</td>').appendTo(row);
         $("<td class='textCenter'>" + data2.scores.tied + '</td>').appendTo(row);
-//        console.log(row)
       })
       })
     .fail(function( jqXHR, textStatus ) {
@@ -141,13 +42,14 @@ function loadData() {
 }
 
 function login(evt) {
+    console.log(evt)
     evt.preventDefault();
     var form = evt.target.form;
-    $.post("/app/login",
-        { name: form["username"].value,
+    $.post("/api/login",
+        {   name: form["username"].value,
             pwd: form["password"].value })
-        .done(function(data) {
-            console.log(data);
+        .done(function() {
+            console.log("exitoss", name);
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
@@ -157,7 +59,7 @@ function login(evt) {
 
 function logout(evt) {
     evt.preventDefault();
-    $.post("/app/logout")
+    $.post("/api/logout")
         .done(function(data) {
             console.log(data.status)
         })
