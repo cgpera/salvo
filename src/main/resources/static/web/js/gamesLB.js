@@ -43,7 +43,6 @@ function loadData() {
 }
 
 function login(evt) {
-    console.log(evt)
     evt.preventDefault();
     var form = evt.target.form;
     $.post("/api/login",
