@@ -25,15 +25,16 @@ function loadData() {
 
   $.get("/api/leaderBoard")
     .done(function(respuesta) {
-//        console.log(respuesta)
-      let row = $('<tr></tr>').appendTo("#leader-List");
+//      let row = $('<th></th>').appendTo("#leader-list");
+      let row = $("<thead><th>Name</th><th>Total</th><th>Won</th><th>Lost</th><th>Tied</th></thead>").appendTo("#leader-list")
       $.each(respuesta, function(key, data2) {
-      console.log(data2.email, data2.scores)
-        $('<td>' + data2.email + '</td>').appendTo(row);
-        $("<td class='textCenter'>" + data2.scores.total.toFixed(1) + '</td>').appendTo(row);
-        $("<td class='textCenter'>" + data2.scores.won + '</td>').appendTo(row);
-        $("<td class='textCenter'>" + data2.scores.lost + '</td>').appendTo(row);
-        $("<td class='textCenter'>" + data2.scores.tied + '</td>').appendTo(row);
+        $("<tr>").appendTo(row)
+        $("<td>" + data2.email + "</td>").appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.total.toFixed(1) + "</td>").appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.won + "</td>").appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.lost + "</td>").appendTo(row);
+        $("<td class='textCenter'>" + data2.scores.tied + "</td>").appendTo(row);
+        $("</tr>").appendTo(row)
       })
       })
     .fail(function( jqXHR, textStatus ) {
@@ -57,6 +58,22 @@ function login(evt) {
 
 }
 
+/*function login() {
+    $(boton).Click(function() {
+    $.post("/api/login",
+        {
+        name: form["username"].value,
+        pwd: form["password"].value
+        })
+        .done(function() {
+        console.log("exito", name)
+        })
+        .fail(function(jqXHR, textStatus) {
+            alert("Failed" + textStatus)
+        })
+     })
+}
+*/
 function logout(evt) {
     evt.preventDefault();
     $.post("/api/logout")
@@ -66,5 +83,4 @@ function logout(evt) {
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
         });
-
 }

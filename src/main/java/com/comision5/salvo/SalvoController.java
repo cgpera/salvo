@@ -4,10 +4,12 @@ import com.comision5.salvo.models.Game;
 import com.comision5.salvo.models.GamePlayer;
 import com.comision5.salvo.models.Player;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -83,5 +85,28 @@ public class SalvoController {
                 .stream()
                 .map(Player::makePlayerScoreDTO)
                 .collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "/login", method=RequestMethod.POST)
+    public ResponseEntity<Object> register(@RequestParam String name, @RequestParam String pwd) {
+        if (name.isEmpty() || pwd.isEmpty()) {
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+
+        if (playerRepository.findByUserName(name) !=  null) {
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+        }
+
+        playerRepository.save(new Player(name, passwordEncoder.encode(pwd)));
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping("/juegos")
+    public Set<Player> getAll(Authentication authentication) {
+        return playerRepository.findByUserName(authentication.getName());
+    }
+
+    private boolean isGuest(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 }

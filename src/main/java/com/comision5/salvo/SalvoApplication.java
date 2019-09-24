@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @SpringBootApplication
-public class SalvoApplication {
+public class SalvoApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(com.comision5.salvo.SalvoApplication.class, args);
 	}
@@ -250,8 +251,9 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	}
 }
 
-@Configuration
+
 @EnableWebSecurity
+@Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

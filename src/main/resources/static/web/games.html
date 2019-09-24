@@ -9,12 +9,12 @@
 <body>
   <div class="container">
     <div class="row">
-      <form id="login-form" onsubmit="login()">
+      <form id="login-form" onsubmit="return false">
         <label>Name: <input type="text" name="username"></label>
         <label>Password: <input type="text" name="password"></label>
-        <button>Log in</button>
+        <button id="boton" type="submit">Log in</button>
       </form>
-      <form id="logout-form" onsubmit="logout()">
+      <form id="logout-form" onsubmit="return false">
         <button>Log out</button>
       </form>
     </div>
@@ -26,13 +26,6 @@
       </div>
       <div class="col">
         <table class="table table-striped table-dark tablaJugadores">
-          <thead>
-          <th>Name</th>
-          <th>Total</th>
-          <th>Won</th>
-          <th>Lost</th>
-          <th>Tied</th>
-          </thead>
           <tbody id="leader-list">
           </tbody>
         </table>
