@@ -102,8 +102,8 @@ public class SalvoController {
     }
 
     @RequestMapping("/juegos")
-    public Set<Player> getAll(Authentication authentication) {
-        return playerRepository.findByUserName(authentication.getName());
+    public Set<Game> getAll(Authentication authentication) {
+        return repo. (authentication.getName());
     }
 
     private boolean isGuest(Authentication authentication) {
