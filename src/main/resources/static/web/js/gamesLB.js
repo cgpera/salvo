@@ -1,5 +1,5 @@
-let playersArray;
-let gamesData;
+var playersArray;
+var gamesData;
 
 $(function() {
     loadData()
@@ -26,7 +26,7 @@ function loadData() {
   $.get("/api/leaderBoard")
     .done(function(respuesta) {
 //      let row = $('<th></th>').appendTo("#leader-list");
-      let row = $("<thead><th>Name</th><th>Total</th><th>Won</th><th>Lost</th><th>Tied</th></thead>").appendTo("#leader-list")
+      var row = $("<thead><th>Name</th><th>Total</th><th>Won</th><th>Lost</th><th>Tied</th></thead>").appendTo("#leader-list")
       $.each(respuesta, function(key, data2) {
         $("<tr>").appendTo(row)
         $("<td>" + data2.email + "</td>").appendTo(row);
@@ -42,14 +42,16 @@ function loadData() {
     });
 }
 
-function login(evt) {
-    evt.preventDefault();
-    var form = evt.target.form;
+
+$(loginBut).click(function () {
+    login()
+})
+function login() {
     $.post("/api/login",
-        {   name: form["username"].value,
-            pwd: form["password"].value })
+        {   name: $("#username").val(),
+            pwd: $("#password").val() })
         .done(function() {
-            console.log("exitoss", name);
+            console.log("exitos" + name);
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
