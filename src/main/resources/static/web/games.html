@@ -9,23 +9,24 @@
 <body>
   <div class="container">
     <div class="row">
-
       <form id="login-form">
         <label>Name: <input type="text" name="username" id="username"></label>
         <label>Password: <input type="text" name="password" id="password"></label>
-        <button type="button" id="loginBut"">Log in</button>
+        <button type="button" id="loginBut">Log in</button>
       </form>
       <form id="logout-form" onsubmit="return false">
-        <button>Log out</button>
+        <label>Name: <span id="login-name"></span></label>
+        <button type="button" id="logoutBut">Log out</button>
       </form>
 <!--
-      <form id="login-form" method="post" action="/api/login">
+      <form id="login-form" onsubmit="return false">
         <label>Name: <input type="text" name="username"></label>
         <label>Password: <input type="text" name="password"></label>
         <button id="submit-but" type="submit">Log in</button>
       </form>
-    </div>
 -->
+    </div>
+
     <div class="row">
       <div class="col">
         <ol class="list-group" id="game-list">

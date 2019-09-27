@@ -42,6 +42,7 @@ function loadData() {
     });
 }
 
+var loginname = ""
 
 $(loginBut).click(function () {
     login()
@@ -50,36 +51,39 @@ function login() {
     $.post("/api/login",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
+        .then(function() {
+            $("#login-form").hide()
+            $("#logout-form").show()
+            loginname = $("#username").val()
+            })
         .done(function() {
-            console.log("exitos" + name);
+            $("#login-name").text(loginname)
+            console.log("exitos: " + loginname);
         })
         .fail(function( jqXHR, textStatus ) {
+            $("#username").val("")
+            $("#password").val("")
             alert( "Failed: " + textStatus );
         });
 
 }
 
-/*function login() {
-    $(boton).Click(function() {
-    $.post("/api/login",
-        {
-        name: form["username"].value,
-        pwd: form["password"].value
-        })
-        .done(function() {
-        console.log("exito", name)
-        })
-        .fail(function(jqXHR, textStatus) {
-            alert("Failed" + textStatus)
-        })
-     })
-}
-*/
-function logout(evt) {
-    evt.preventDefault();
+$(logoutBut).click(function () {
+    logout()
+})
+
+function logout() {
     $.post("/api/logout")
+        .then(function() {
+            $("#username").val("")
+            $("#password").val("")
+            $("#login-name").text(loginname)
+            console.log(loginname)
+        })
         .done(function(data) {
-            console.log(data.status)
+            $("#login-form").show()
+            $("#logout-form").hide()
+
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );

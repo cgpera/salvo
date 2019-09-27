@@ -100,14 +100,22 @@ public class SalvoController {
         playerRepository.save(new Player(username, passwordEncoder.encode(password)));
         return new ResponseEntity<>("user created", HttpStatus.CREATED);
     }
+
+
     // falta
-
-
-/*    @RequestMapping("/juegos")
-    public Set<Game> getAll(Authentication authentication) {
+/*
+    @RequestMapping("/player")
+    public Player getAll(Authentication authentication) {
         return repo. (authentication.getName());
     }
 */
+
+
+    @RequestMapping(value = "/players", method = RequestMethod.GET)
+    public Player getLoggedPlayer(Authentication authentication) {
+        return playerRepository.findByUserName(authentication.getName());
+    }
+
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
