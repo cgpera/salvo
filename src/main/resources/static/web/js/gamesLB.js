@@ -2,6 +2,9 @@ var playersArray;
 var gamesData;
 
 $(function() {
+    $("#login-form").show()
+    $("#logout-form").hide()
+
     loadData()
 });
 
@@ -26,8 +29,8 @@ function loadData() {
   $.get("/api/leaderBoard")
     .done(function(respuesta) {
 //      let row = $('<th></th>').appendTo("#leader-list");
-      var row = $("<thead><th>Name</th><th>Total</th><th>Won</th><th>Lost</th><th>Tied</th></thead>").appendTo("#leader-list")
-      $.each(respuesta, function(key, data2) {
+        const row = $("<thead><th>Name</th><th>Total</th><th>Won</th><th>Lost</th><th>Tied</th></thead>").appendTo("#leader-list");
+        $.each(respuesta, function(key, data2) {
         $("<tr>").appendTo(row)
         $("<td>" + data2.email + "</td>").appendTo(row);
         $("<td class='textCenter'>" + data2.scores.total.toFixed(1) + "</td>").appendTo(row);
@@ -44,48 +47,81 @@ function loadData() {
 
 var loginname = ""
 
-$(loginBut).click(function () {
+$("#loginBut").click(function () {
     login()
 })
+
 function login() {
     $.post("/api/login",
-        {   name: $("#username").val(),
-            pwd: $("#password").val() })
-        .then(function() {
+        {
+            name: $("#username").val(),
+            pwd: $("#password").val()
+        })
+        .then(function () {
             $("#login-form").hide()
+            $("#login-name").show()
             $("#logout-form").show()
             loginname = $("#username").val()
-            })
-        .done(function() {
+        })
+        .done(function () {
             $("#login-name").text(loginname)
             console.log("exitos: " + loginname);
         })
-        .fail(function( jqXHR, textStatus ) {
+        .fail(function (jqXHR, textStatus) {
             $("#username").val("")
             $("#password").val("")
-            alert( "Failed: " + textStatus );
+            alert("Failed: " + textStatus);
         });
 
-}
-
-$(logoutBut).click(function () {
-    logout()
+$("#signBut").click(function () {
+    console.log("boton register")
+    register()
 })
 
-function logout() {
-    $.post("/api/logout")
-        .then(function() {
+function register() {
+    console.log("register")
+    $.post("/api/players",
+        {
+            name: $("#username").val(),
+            pwd: $("#password").val()
+        })
+        .then(function () {
+            $("#login-form").hide()
+            $("#login-name").show()
+            $("#logout-form").show()
+            loginname = $("#username").val()
+        })
+        .done(function () {
+            $("#login-name").text(loginname)
+            console.log("exitos: " + loginname);
+        })
+        .fail(function (jqXHR, textStatus) {
             $("#username").val("")
             $("#password").val("")
-            $("#login-name").text(loginname)
-            console.log(loginname)
-        })
-        .done(function(data) {
-            $("#login-form").show()
-            $("#logout-form").hide()
-
-        })
-        .fail(function( jqXHR, textStatus ) {
-            alert( "Failed: " + textStatus );
+            alert("Failed: " + textStatus);
         });
+    }
+
+    $("#logoutBut").click(function () {
+        logout()
+    })
+
+    function logout() {
+        $.post("/api/logout")
+            .then(function () {
+                $("#username").val("")
+                $("#password").val("")
+                $("#login-name").text(loginname)
+                console.log(loginname)
+            })
+            .done(function (data) {
+                $("#login-form").show()
+                $("#logout-form").hide()
+                $("#sign-form").hide()
+
+            })
+            .fail(function (jqXHR, textStatus) {
+                alert("Failed: " + textStatus)
+            })
+    }
 }
