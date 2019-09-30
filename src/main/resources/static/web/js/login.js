@@ -1,20 +1,26 @@
 jQuery(document).ready(function ($) {
   $('#loginform').submit(function (event) {
     event.preventDefault();
-    var data = '{username:' + $('#username').val() + ',password:' + $('#password').val() + '}';
+    var datastr = '{name:' + $('#username').val() + ',pwd:' + $('#password').val() + '}';
+    var name = $('#username').val()
+    var pwd = $('#password').val()
+//    console.log(datastr, data)
     $.ajax({
-      data: data,
+//      data: data,
+        name: name,
+        pwd: pwd,
+        data: {
+        'name': name,
+        'pwd': pwd
+        },
       timeout: 1000,
       type: 'POST',
       url: '/api/login'
-
     }).done(function(data, textStatus, jqXHR) {
-        console.log(data)
       var preLoginInfo = JSON.parse($.cookie('dashboard.pre.login.request'));
       window.location = preLoginInfo.url;
 
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      console.log(data)
       alert('Booh! Wrong credentials, try again!');
     });
   });
