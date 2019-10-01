@@ -48,17 +48,16 @@ $(loginBut).click(function () {
 })
 
 function login() {
+    var nombre = $("#username").val()
+    var pass = $("#password").val()
+    console.log(nombre, pass)
     $.post("/api/login",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
         .done(function(data) {
-            console.log("done " + this.data)
-            var strs = this.data.split('&')
-            this.name = strs[0]
-            this.pwd = strs[1]
-            console.log(strs, this.name)
+//            console.log(data)
             $("#login-form").hide()
-            $("#login-name").text(strs[0])
+            $("#login-name").text(nombre)
             $("#login-name").show()
             $("#logout-form").show()
             $("#register-form").hide()
@@ -78,22 +77,6 @@ function login() {
 
 }
 
-/*function login() {
-    $(boton).Click(function() {
-    $.post("/api/login",
-        {
-        name: form["username"].value,
-        pwd: form["password"].value
-        })
-        .done(function() {
-        console.log("exito", name)
-        })
-        .fail(function(jqXHR, textStatus) {
-            alert("Failed" + textStatus)
-        })
-     })
-}
-*/
 function logout(evt) {
     evt.preventDefault();
     $.post("/api/logout")

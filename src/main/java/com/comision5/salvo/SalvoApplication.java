@@ -240,7 +240,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(inputName-> {
-			Player player = playerRepository.findByUserName(inputName);
+			Player player = playerRepository.findByUserName(inputName).get();
 			if (player != null) {
 				return new User(player.getUserName(), player.getPassword(),
 						AuthorityUtils.createAuthorityList("USER"));
@@ -258,13 +258,14 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/api/games").permitAll()
-				.antMatchers("/api/*").permitAll()
-				.antMatchers("/api/**").permitAll()
-				.antMatchers("/web/**").permitAll()
-				.antMatchers("/rest/**").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN")
-				.antMatchers("/**").hasAuthority("USER")
+//				.antMatchers("/api/games").permitAll()
+              .antMatchers("/api/game_view/**").hasAuthority("USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/**").permitAll()
+               // .antMatchers("/**").hasAuthority("USER")
+//				.antMatchers("/api/**").permitAll()
+//				.antMatchers("/web/**").permitAll()
+				.antMatchers("/rest/**").permitAll() //denyall
 				.anyRequest().permitAll();
 				http.formLogin()
 				.usernameParameter("name")
