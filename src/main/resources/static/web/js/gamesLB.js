@@ -6,7 +6,8 @@ $(function() {
 });
 
 function updateViewGames(data) {
-    var htmlList = data.map(function(game) {
+    console.log(data.player, data.games)
+    var htmlList = data.games.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
      }).join('')
@@ -47,6 +48,10 @@ $(loginBut).click(function () {
     login()
 })
 
+$(logoutBut).click(function () {
+    logout()
+})
+
 function login() {
     var nombre = $("#username").val()
     var pass = $("#password").val()
@@ -62,11 +67,6 @@ function login() {
             $("#logout-form").show()
             $("#register-form").hide()
         })
-/*
-        .done(function(data) {
-            console.log("done")
-            $('#login-name').text(this.data)})
-*/
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
             $("#username").val('')
@@ -74,14 +74,19 @@ function login() {
             $("#login-form").hide()
             $("#register-form").show()
         });
-
 }
 
 function logout(evt) {
-    evt.preventDefault();
+    $("#username").val('')
+    $("#password").val('')
     $.post("/api/logout")
         .done(function(data) {
             console.log(data.status)
+            $("#login-form").show()
+            $("#login-name").show()
+            $("#logout-form").hide()
+            $("#register-form").show()
+
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );

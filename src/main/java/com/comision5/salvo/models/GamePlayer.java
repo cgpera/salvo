@@ -73,6 +73,10 @@ public class GamePlayer {
         return salvoes;
     }
 
+    public Optional<Score>  getScore(){
+        return  this.getPlayer().getScore(this.getGame());
+    }
+
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getId());

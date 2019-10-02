@@ -22,7 +22,7 @@ public class SalvoController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private GameRepository repo;
+    private GameRepository gameRepository;
 
     @Autowired
     private  GamePlayerRepository gamePlayerRepository;
@@ -32,14 +32,16 @@ public class SalvoController {
 
     private Player player;
 
+/*
     @RequestMapping("/games")
     public List<Map<String, Object>> getGames() {
-         return repo
+         return gameRepository
                 .findAll()
                 .stream()
                 .map(game -> game.makeGameDTO())
                 .collect(Collectors.toList());
     }
+*/
 
     private List<Map<String, Object>> getGamePlayerListDTO(Set<GamePlayer> gamePlayers) {
         return gamePlayers
@@ -47,6 +49,25 @@ public class SalvoController {
                 .map(gamePlayerList ->  gamePlayerList.makeGamePlayerDTO())
                 .collect(Collectors.toList());
     }
+
+    @RequestMapping("/games")
+    public Map<String,Object> getGameAll(Authentication authentication){
+        Map<String,  Object>  dto = new LinkedHashMap<>();
+
+        if(isGuest(authentication)){
+            dto.put("player", "Guest");
+        }else{
+            Player player  = playerRepository.findByUserName(authentication.getName()).get();
+            dto.put("player", player.makePlayerDTO());
+        }
+
+        dto.put("games", gameRepository.findAll()
+                .stream()
+                .map(game -> game.makeGameDTO())
+                .collect(Collectors.toList()));
+        return dto;
+    }
+
 
     @RequestMapping("/game_view/{nn}")
     public Map<String, Object> GetGameByGamePlayerID(@PathVariable Long nn){
@@ -87,4 +108,7 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
+    private boolean isGuest(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
+    }
 }

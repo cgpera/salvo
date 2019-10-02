@@ -53,6 +53,16 @@ public class Player {
         return scores;
     }
 
+// de david
+    public Optional<Score> getScore(Game game){
+        Optional<Score> score = this.getScores()
+                .stream()
+                .filter(score1 -> score1.getGame().getId() == game.getId())
+                .findFirst();
+
+        return  score;
+    }
+
     public String getPassword() {
         return password;
     }

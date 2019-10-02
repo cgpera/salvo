@@ -35,6 +35,10 @@ public class Score {
         this.player = player;
     }
 
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
+
     public long getId() {
         return id;
     }
@@ -54,5 +58,14 @@ public class Score {
     public Player getPlayer() {
         return player;
     }
+
+    public Map<String,  Object> makeScoreDTO(){
+        Map<String,  Object>    dto=    new LinkedHashMap<>();
+        dto.put("player",   this.getPlayer().getId());
+        dto.put("score",   this.getScore());
+        dto.put("finishDate", this.getFinishDate().getTime());
+        return  dto;
+    }
+
 
 }

@@ -38,8 +38,8 @@ public class PlayerController {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        if (playerRepository.findByUserName(username) != null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.CONFLICT);
+        if (playerRepository.findByUserName(username).orElse(null) != null) {
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
         playerRepository.save(new Player(username, passwordEncoder.encode(password)));
@@ -61,15 +61,13 @@ public class PlayerController {
             return playerRepository.findByUserName(authentication.getName());
         }
 
-        private boolean isGuest(Authentication authentication) {
-            return authentication == null || authentication instanceof AnonymousAuthenticationToken;
         }*/
     @RequestMapping("/players")
     public List<Object> getPlayersAll() {
         return playerRepository
                 .findAll()
                 .stream()
-                .map(player1 -> player.makePlayerDTO())
+                .map(player -> player.makePlayerDTO())
                 .collect(Collectors.toList());
     }
 }
