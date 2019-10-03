@@ -6,7 +6,6 @@ $(function() {
 });
 
 function updateViewGames(data) {
-    console.log(data.player, data.games)
     var htmlList = data.games.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
@@ -55,12 +54,11 @@ $(logoutBut).click(function () {
 function login() {
     var nombre = $("#username").val()
     var pass = $("#password").val()
-    console.log(nombre, pass)
-    $.post("/api/login",
+            $("#register-form").hide()
+            $.post("/api/login",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
         .done(function(data) {
-//            console.log(data)
             $("#login-form").hide()
             $("#login-name").text(nombre)
             $("#login-name").show()
@@ -72,6 +70,7 @@ function login() {
             $("#username").val('')
             $("#password").val('')
             $("#login-form").hide()
+            $("#logout-form").hide()
             $("#register-form").show()
         });
 }
@@ -81,11 +80,11 @@ function logout(evt) {
     $("#password").val('')
     $.post("/api/logout")
         .done(function(data) {
-            console.log(data.status)
             $("#login-form").show()
             $("#login-name").show()
             $("#logout-form").hide()
             $("#register-form").show()
+            location.reload()
 
         })
         .fail(function( jqXHR, textStatus ) {

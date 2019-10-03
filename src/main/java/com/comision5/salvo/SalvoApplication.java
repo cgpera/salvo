@@ -240,6 +240,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(inputName-> {
+			// da un error de runtime
 			Player player = playerRepository.findByUserName(inputName).get();
 			if (player != null) {
 				return new User(player.getUserName(), player.getPassword(),
