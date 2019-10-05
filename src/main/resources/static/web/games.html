@@ -13,16 +13,19 @@
         <label>Name: <input type="text" name="username" id="username"></label>
         <label>Password: <input type="text" name="password" id="password"></label>
         <button type="button" id="loginBut">Log in</button>
+        <button type="button" id="signBut">Register</button>
       </form>
-      <form id="logout-form" onsubmit="return false">
-        <label>Name: <span id="login-name"></span></label>
+      <form id="logout-form" onsubmit="return false" style="display: none">
+        <label><span id="login-name"></span></label>
         <button type="button" id="logoutBut">Log out</button>
       </form>
-      <form id="register-form">
+<!--
+      <form id="register-form" style="display: none">
         <label>Name: <input type="text" name="username" id="regusername"></label>
         <label>Password: <input type="text" name="password" id="regpassword"></label>
         <button type="button" id="signBut">Register</button>
       </form>
+-->
     </div>
 
     <div class="row">

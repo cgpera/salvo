@@ -33,36 +33,21 @@ public class PlayerController {
     private Player player;
 
     @RequestMapping(path = "/players", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(@RequestParam String username, @RequestParam String password) {
-        if (username.isEmpty() || password.isEmpty()) {
+    public ResponseEntity<Object> register(@RequestParam String name, @RequestParam String pwd) {
+        if (name.isEmpty() || pwd.isEmpty()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        if (playerRepository.findByUserName(username).orElse(null) != null) {
+        if (playerRepository.findByUserName(name).orElse(null) != null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
-        playerRepository.save(new Player(username, passwordEncoder.encode(password)));
+        playerRepository.save(new Player(name, passwordEncoder.encode(pwd)));
         return new ResponseEntity<>("user created", HttpStatus.CREATED);
     }
 
 
-    // falta
-/*
-    @RequestMapping("/player")
-    public Player getAll(Authentication authentication) {
-        return repo. (authentication.getName());
-    }
-*/
-
-
-    /*    @RequestMapping(value = "/players", method = RequestMethod.GET)
-        public Player getLoggedPlayer(Authentication authentication) {
-            return playerRepository.findByUserName(authentication.getName());
-        }
-
-        }*/
-    @RequestMapping("/players")
+/*    @RequestMapping("/players")
     public List<Object> getPlayersAll() {
         return playerRepository
                 .findAll()
@@ -70,4 +55,6 @@ public class PlayerController {
                 .map(player -> player.makePlayerDTO())
                 .collect(Collectors.toList());
     }
+
+ */
 }

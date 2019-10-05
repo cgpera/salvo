@@ -1,12 +1,22 @@
 var playersArray;
 var gamesData;
+var jugador = "GUEST";
 
 $(function() {
     loadData()
 });
 
 function updateViewGames(data) {
-    console.log(data.player, data.games)
+/*
+    console.log(data)
+    if(data) {
+        jugador = data.player
+        console.log(player)
+    }
+    else {
+        jugador = "GUEST"
+    }
+*/
     var htmlList = data.games.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
@@ -48,6 +58,10 @@ $(loginBut).click(function () {
     login()
 })
 
+$(signBut).click(function () {
+    register()
+})
+
 $(logoutBut).click(function () {
     logout()
 })
@@ -55,13 +69,13 @@ $(logoutBut).click(function () {
 function login() {
     var nombre = $("#username").val()
     var pass = $("#password").val()
-    console.log(nombre, pass)
-    $.post("/api/login",
+            $.post("/api/login",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
         .done(function(data) {
-//            console.log(data)
             $("#login-form").hide()
+            jugador = nombre
+            console.log(jugador)
             $("#login-name").text(nombre)
             $("#login-name").show()
             $("#logout-form").show()
@@ -71,8 +85,9 @@ function login() {
             alert( "Failed: " + textStatus );
             $("#username").val('')
             $("#password").val('')
-            $("#login-form").hide()
-            $("#register-form").show()
+            $("#login-form").show()
+            $("#logout-form").hide()
+//            $("#register-form").show()
         });
 }
 
@@ -81,14 +96,45 @@ function logout(evt) {
     $("#password").val('')
     $.post("/api/logout")
         .done(function(data) {
-            console.log(data.status)
             $("#login-form").show()
             $("#login-name").show()
             $("#logout-form").hide()
             $("#register-form").show()
+            jugador = "GUEST"
+            console.log(jugador)
+            location.reload()
 
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
+        });
+}
+
+function register() {
+//    var nombre = $("#username").val()
+//    var pass = $("#password").val()
+//    console.log((nombre, pass))
+    $.post("/api/players",
+        {   name: $("#username").val(),
+            pwd: $("#password").val() })
+        .done(function(data) {
+            $("#login-form").hide()
+            jugador = $("#username").val()
+            $("#login-name").text(jugador)
+            $("#logout-form").show()
+            $.post("/api/login",
+                {   name: $("#username").val(),
+                    pwd: $("#password").val() })
+                .done(function (data) {
+                    console.log("logged after signup")
+                    return data
+                })
+        })
+        .fail(function( jqXHR, textStatus ) {
+            alert( "Fallo: " + textStatus );
+            $("#username").val('')
+            $("#password").val('')
+            $("#login-form").show()
+            $("#logout-form").hide()
         });
 }

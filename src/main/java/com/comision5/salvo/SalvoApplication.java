@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @SpringBootApplication
-public class SalvoApplication extends SpringBootServletInitializer {
+public class SalvoApplication { // extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(com.comision5.salvo.SalvoApplication.class, args);
 	}
@@ -240,7 +240,8 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(inputName-> {
-			Player player = playerRepository.findByUserName(inputName).get();
+			// da un error de runtime
+			Player player = playerRepository.findByUserName(inputName).orElse(null);
 			if (player != null) {
 				return new User(player.getUserName(), player.getPassword(),
 						AuthorityUtils.createAuthorityList("USER"));
