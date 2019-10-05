@@ -46,7 +46,6 @@ public class PlayerController {
         return new ResponseEntity<>("user created", HttpStatus.CREATED);
     }
 
-
 /*    @RequestMapping("/players")
     public List<Object> getPlayersAll() {
         return playerRepository
