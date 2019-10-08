@@ -7,19 +7,6 @@ $(function() {
 });
 
 function updateViewGames(data) {
-<<<<<<< HEAD
-/*
-    console.log(data)
-    if(data) {
-        jugador = data.player
-        console.log(player)
-    }
-    else {
-        jugador = "GUEST"
-    }
-*/
-=======
->>>>>>> 5b18834d6cc5e299e5615705b266a95980360552
     var htmlList = data.games.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(', ') + '</li>';
@@ -72,35 +59,27 @@ $(logoutBut).click(function () {
 function login() {
     var nombre = $("#username").val()
     var pass = $("#password").val()
-<<<<<<< HEAD
-=======
-            $("#register-form").hide()
->>>>>>> 5b18834d6cc5e299e5615705b266a95980360552
-            $.post("/api/login",
+    validar(nombre)
+    $.post("/api/login",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
-        .done(function(data) {
-            $("#login-form").hide()
-            jugador = nombre
-            console.log(jugador)
-            $("#login-name").text(nombre)
-            $("#login-name").show()
-            $("#logout-form").show()
-            $("#register-form").hide()
+    .done(function(data) {
+    $("#login-form").hide()
+    jugador = nombre
+    console.log(jugador)
+    $("#login-name").text(nombre)
+    $("#login-name").show()
+    $("#logout-form").show()
+    $("#register-form").hide()
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
             $("#username").val('')
             $("#password").val('')
-<<<<<<< HEAD
             $("#login-form").show()
             $("#logout-form").hide()
-//            $("#register-form").show()
-=======
-            $("#login-form").hide()
-            $("#logout-form").hide()
             $("#register-form").show()
->>>>>>> 5b18834d6cc5e299e5615705b266a95980360552
+            location.reload()
         });
 }
 
@@ -113,13 +92,8 @@ function logout(evt) {
             $("#login-name").show()
             $("#logout-form").hide()
             $("#register-form").show()
-<<<<<<< HEAD
             jugador = "GUEST"
-            console.log(jugador)
-=======
->>>>>>> 5b18834d6cc5e299e5615705b266a95980360552
             location.reload()
-
         })
         .fail(function( jqXHR, textStatus ) {
             alert( "Failed: " + textStatus );
@@ -127,15 +101,14 @@ function logout(evt) {
 }
 
 function register() {
-//    var nombre = $("#username").val()
-//    var pass = $("#password").val()
-//    console.log((nombre, pass))
+    validar($("#username").val())
     $.post("/api/players",
         {   name: $("#username").val(),
             pwd: $("#password").val() })
         .done(function(data) {
-            $("#login-form").hide()
             jugador = $("#username").val()
+            alert("Player created " + jugador)
+            $("#login-form").hide()
             $("#login-name").text(jugador)
             $("#logout-form").show()
             $.post("/api/login",
@@ -152,5 +125,25 @@ function register() {
             $("#password").val('')
             $("#login-form").show()
             $("#logout-form").hide()
-        });
+            location.reload()
+       });
+}
+
+function validar(user) {
+
+    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+//    return regex.test(user) ? true : false;
+    if( regex.test(user) == true) {
+        return user
+    }
+    else {
+        alert( "User not valid " + user + " , it must be a valid email address");
+        $("#username").val('')
+        $("#password").val('')
+        $("#login-form").show()
+        $("#logout-form").hide()
+        $("#register-form").show()
+        location.reload()
+        return false
+    }
 }
