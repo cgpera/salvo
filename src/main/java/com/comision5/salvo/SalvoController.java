@@ -68,6 +68,36 @@ public class SalvoController {
         return dto;
     }
 
+    @RequestMapping(path = "/games", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> createGame(Authentication authentication) {
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeGameMap("not logged", -1L), HttpStatus.FORBIDDEN);
+        }else{
+            Player player  = playerRepository.findByUserName(authentication.getName()).get();
+            Date creationDate = new Date();
+            Game game = new Game(creationDate);
+            GamePlayer gamePlayer = new GamePlayer(creationDate, player, game);
+            gameRepository.save(game);
+            gamePlayerRepository.save(gamePlayer);
+            return new ResponseEntity<>(makeGameMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
+        }
+    }
+
+    @RequestMapping(path = "/games/{id}/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> createGame(@PathVariable Long id,Authentication authentication ) {
+        System.out.println(id);
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeGameMap("not logged", -1L), HttpStatus.FORBIDDEN);
+        }else{
+            Player player  = playerRepository.findByUserName(authentication.getName()).get();
+            Date creationDate = new Date();
+            Game game = gameRepository.findById(id).get();
+            GamePlayer gamePlayer = new GamePlayer(creationDate, player, game);
+            gamePlayerRepository.save(gamePlayer);
+            return new ResponseEntity<>(makeGameMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
+        }
+    }
+
 
     @RequestMapping("/game_view/{nn}")
     public Map<String, Object> GetGameByGamePlayerID(@PathVariable Long nn){
@@ -110,5 +140,11 @@ public class SalvoController {
 
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
+    }
+
+    private Map<String, Object> makeGameMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
     }
 }
