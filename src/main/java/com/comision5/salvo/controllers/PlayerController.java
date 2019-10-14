@@ -1,18 +1,14 @@
-package com.comision5.salvo;
+package com.comision5.salvo.controllers;
 
-import com.comision5.salvo.models.Game;
-import com.comision5.salvo.models.GamePlayer;
+import com.comision5.salvo.repositories.PlayerRepository;
 import com.comision5.salvo.models.Player;
+import com.comision5.salvo.repositories.GamePlayerRepository;
+import com.comision5.salvo.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

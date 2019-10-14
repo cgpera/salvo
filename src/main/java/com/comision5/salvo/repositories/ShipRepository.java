@@ -1,4 +1,4 @@
-package com.comision5.salvo;
+package com.comision5.salvo.repositories;
 
 import com.comision5.salvo.models.Ship;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -7,12 +7,12 @@ $(function() {
 });
 
 function updateViewGames(data) {
-    var htmlHead= '<li class="list-group-item">Created   Username 1      Username 2 </li>'
+//    var htmlHead= '<li class="list-group-item">Created   Username 1      Username 2 </li>'
     var htmlList = data.games.map(function(game) {
     return '<li class="list-group-item">' + new Date(game.created).toLocaleString() + ' '
      + game.gamePlayers.map(function(element) { return element.player.userName}).join(' - ') + '</li>';
      }).join('')
-  document.getElementById("game-list").innerHTML = htmlHead + htmlList;
+  document.getElementById("game-list").innerHTML = htmlList;
 }
 
 

@@ -1,4 +1,4 @@
-package com.comision5.salvo;
+package com.comision5.salvo.repositories;
 
 import com.comision5.salvo.models.Player;
 import com.comision5.salvo.models.Salvo;
