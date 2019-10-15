@@ -1,10 +1,12 @@
 var playersArray;
 var gamesData;
 var jugador = "GUEST";
+var data;
 
 $(function() {
     loadData()
 });
+
 
 function updateViewGames(data) {
 //    var htmlHead= '<li class="list-group-item">Created   Username 1      Username 2 </li>'
@@ -19,6 +21,7 @@ function updateViewGames(data) {
 function loadData() {
   $.get("/api/games")
     .done(function(data) {
+        
       updateViewGames(data);
     })
     .fail(function( jqXHR, textStatus ) {
@@ -148,3 +151,20 @@ function validar(user) {
         return false
     }
 }
+
+const app = new Vue({
+    el: "#app",
+    data: {
+        message: '',
+        player: '',
+        games: []
+/*
+        { date: 'a', gp1: 'a', gp2: 'a'},
+        { date: 'b', gp1: 'b', gp2: 'b'},
+        { date: 'c', gp1: 'c', gp2: 'c'}
+        ] //  'game1', 'game2', 'game3']
+*/
+    }
+})
+
+app.data = data
