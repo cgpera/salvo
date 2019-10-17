@@ -180,8 +180,9 @@ getGamesFromURL(url, init_str)
 //    app = result
     app.games = result.games
     app.player = result.player
-    app.player0 = result.gamePlayers
-    console.log(result.games, result.player, app.player0)
+    app.gamePlayers = result.games.map(game => game.gamePlayers)
+      app.players = app.gamePlayers.map(gp => gp.map(el => el.id))
+    console.log(result.games, app.gamePlayers, app.players)
   })
   .catch(e => console.log(`Error Capturado Fuera de la función async: ${e}`));
 
@@ -191,8 +192,8 @@ var app = new Vue({
     data: {
         message: '',
         player: '',
-        player0: '',
-        player1: '',
+        gamePlayers: [],
+        players: {},
         games: []
 /*
         { date: 'a', gp1: 'a', gp2: 'a'},

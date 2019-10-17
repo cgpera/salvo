@@ -27,7 +27,10 @@
         {{message}}
 -->
         <ul v-for="game in games">
+<!--
           <li>{{game.created}} - {{game.gamePlayers}} - {{game.gamePlayers}}</li>
+-->
+            <li>{{game.created}} - <p v-for="player in players">{{player}}</li>
 
         </ul>
         <ol class="list-group" id="game-list">
