@@ -22,7 +22,7 @@ function loadData() {
   $.get("/api/games")
     .done(function(data) {
         
-      updateViewGames(data);
+//      updateViewGames(data);
     })
     .fail(function( jqXHR, textStatus ) {
       alert( "Failed: " + textStatus );
@@ -151,12 +151,48 @@ function validar(user) {
         return false
     }
 }
+/* VUE */
 
-const app = new Vue({
+const init_str = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+//    'X-API-Key': 'L6x2Gbl9kawrKwFw4kQp75kCXLgCQokZEtDC1zFN',
+  },
+  mode: 'cors',
+};
+
+const url = '/api/games'
+
+
+const getGamesFromURL = async (urlAddr, options) => {
+  try {
+    const response = await fetch(urlAddr, options);
+    const json = response.json()
+    return json
+  } catch (e) {
+    throw `Error original: ${e}`;
+  }
+}
+
+getGamesFromURL(url, init_str)
+  .then(result => {
+//    app = result
+    app.games = result.games
+    app.player = result.player
+    app.player0 = result.gamePlayers
+    console.log(result.games, result.player, app.player0)
+  })
+  .catch(e => console.log(`Error Capturado Fuera de la función async: ${e}`));
+
+
+var app = new Vue({
     el: "#app",
     data: {
         message: '',
         player: '',
+        player0: '',
+        player1: '',
         games: []
 /*
         { date: 'a', gp1: 'a', gp2: 'a'},
@@ -167,4 +203,6 @@ const app = new Vue({
     }
 })
 
-app.data = data
+
+
+//app.games = data.games
