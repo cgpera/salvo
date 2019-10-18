@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="row">
+    <div class="row mt-5 mb-3">
       <form id="login-form">
         <label>Name: <input type="email" name="username" id="username"></label>
         <label>Password: <input type="text" name="password" id="password"></label>
@@ -30,7 +30,7 @@
 <!--
           <li>{{game.created}} - {{game.gamePlayers}} - {{game.gamePlayers}}</li>
 -->
-            <li>{{game.created}} - <p v-for="player in players">{{player}}</li>
+            <li>{{game.created}} - <p v-for="jugador in playerGP">{{jugador}}</li>
 
         </ul>
         <ol class="list-group" id="game-list">
