@@ -48,6 +48,7 @@ function loadData() {
 }
 
 
+/*
 $(loginBut).click(function () {
     login()
 })
@@ -59,98 +60,8 @@ $(signBut).click(function () {
 $(logoutBut).click(function () {
     logout()
 })
+*/
 
-function login() {
-    var nombre = $("#username").val()
-    var pass = $("#password").val()
-    validar(nombre)
-    $.post("/api/login",
-        {   name: $("#username").val(),
-            pwd: $("#password").val() })
-    .done(function(data) {
-    $("#login-form").hide()
-    jugador = nombre
-    console.log(jugador)
-    $("#login-name").text(nombre)
-    $("#login-name").show()
-    $("#logout-form").show()
-    $("#register-form").hide()
-        })
-        .fail(function( jqXHR, textStatus ) {
-            alert( "Failed: " + textStatus );
-            $("#username").val('')
-            $("#password").val('')
-            $("#login-form").show()
-            $("#logout-form").hide()
-            $("#register-form").show()
-            location.reload()
-        });
-}
-
-function logout(evt) {
-    $("#username").val('')
-    $("#password").val('')
-    $.post("/api/logout")
-        .done(function(data) {
-            $("#login-form").show()
-            $("#login-name").show()
-            $("#logout-form").hide()
-            $("#register-form").show()
-            jugador = "GUEST"
-            location.reload()
-        })
-        .fail(function( jqXHR, textStatus ) {
-            alert( "Failed: " + textStatus );
-        });
-}
-
-function register() {
-    validar($("#username").val())
-    $.post("/api/players",
-        {   name: $("#username").val(),
-            pwd: $("#password").val() })
-        .done(function(data) {
-            jugador = $("#username").val()
-            alert("Player created " + jugador)
-            $("#login-form").hide()
-            $("#login-name").text(jugador)
-            $("#logout-form").show()
-            $.post("/api/login",
-                {   name: $("#username").val(),
-                    pwd: $("#password").val() })
-                .done(function (data) {
-                    console.log("logged after signup")
-                    return data
-                })
-        })
-        .fail(function( jqXHR, textStatus ) {
-            alert( "Fallo: " + textStatus );
-            $("#username").val('')
-            $("#password").val('')
-            $("#login-form").show()
-            $("#logout-form").hide()
-            location.reload()
-       });
-}
-
-function validar(user) {
-
-    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-//    return regex.test(user) ? true : false;
-    if( regex.test(user) == true) {
-        return user
-    }
-    else {
-        alert( "User not valid " + user + " , it must be a valid email address");
-        $("#username").val('')
-        $("#password").val('')
-        $("#login-form").show()
-        $("#logout-form").hide()
-        $("#register-form").show()
-        location.reload()
-        return false
-    }
-}
 /* VUE */
 
 const init_str = {
@@ -210,15 +121,100 @@ var app = new Vue({
         players: {},
         playerGP: [],
         games: []
-/*
-        { date: 'a', gp1: 'a', gp2: 'a'},
-        { date: 'b', gp1: 'b', gp2: 'b'},
-        { date: 'c', gp1: 'c', gp2: 'c'}
-        ] //  'game1', 'game2', 'game3']
-*/
+    },
+    methods: {
+        login() {
+            var nombre = $("#username").val()
+            var pass = $("#password").val()
+            validar(nombre)
+            $.post("/api/login",
+                {   name: $("#username").val(),
+                    pwd: $("#password").val() })
+            .done(function(data) {
+            $("#login-form").hide()
+            location.reload()
+            jugador = nombre
+            console.log(jugador)
+            $("#login-name").text(nombre)
+            $("#login-name").show()
+            $("#logout-form").show()
+            $("#register-form").hide()
+                })
+                .fail(function( jqXHR, textStatus ) {
+                    alert( "Failed: " + textStatus );
+                    $("#username").val('')
+                    $("#password").val('')
+                    $("#login-form").show()
+                    $("#logout-form").hide()
+                    $("#register-form").show()
+                    location.reload()
+                });
+        },
+
+            logout(evt) {
+            $("#username").val('')
+            $("#password").val('')
+            $.post("/api/logout")
+                .done(function(data) {
+                    $("#login-form").show()
+                    $("#login-name").show()
+                    $("#logout-form").hide()
+                    $("#register-form").show()
+                    jugador = "GUEST"
+                    location.reload()
+                })
+                .fail(function( jqXHR, textStatus ) {
+                    alert( "Failed: " + textStatus );
+                });
+        },
+
+        register() {
+            validar($("#username").val())
+            $.post("/api/players",
+                {   name: $("#username").val(),
+                    pwd: $("#password").val() })
+                .done(function(data) {
+                    jugador = $("#username").val()
+                    alert("Player created " + jugador)
+                    $("#login-form").hide()
+                    $("#login-name").text(jugador)
+                    $("#logout-form").show()
+                    $.post("/api/login",
+                        {   name: $("#username").val(),
+                            pwd: $("#password").val() })
+                        .done(function (data) {
+                            console.log("logged after signup")
+                            return data
+                        })
+                })
+                .fail(function( jqXHR, textStatus ) {
+                    alert( "Fallo: " + textStatus );
+                    $("#username").val('')
+                    $("#password").val('')
+                    $("#login-form").show()
+                    $("#logout-form").hide()
+                    location.reload()
+               });
+        },
+
+        createGame() {}
     }
 })
+        function validar(user) {
 
-
-
-//app.games = data.games
+            var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        //    return regex.test(user) ? true : false;
+            if( regex.test(user) == true) {
+                return user
+            }
+            else {
+                alert( "User not valid " + user + " , it must be a valid email address");
+                $("#username").val('')
+                $("#password").val('')
+                $("#login-form").show()
+                $("#logout-form").hide()
+                $("#register-form").show()
+                location.reload()
+                return false
+            }
+        }
