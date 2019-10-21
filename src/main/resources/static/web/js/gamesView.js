@@ -91,23 +91,21 @@ getGamesFromURL(url, init_str)
 //    app = result
     app.games = result.games
     app.player = result.player
+    console.log(app.player)
     app.gamePlayers = result.games.map(game => game.gamePlayers)
     //app.players = app.gamePlayers.map((gp, index) => gp)
 
 
     app.gamePlayers.forEach(function(elemento, index) {
         app.playerGP = []
-        console.log(index, elemento)
+//        console.log(index, elemento)
         app.playerGP = elemento.map((el, index) => el.player.userName)
         console.log("player in gp " + app.playerGP)
     })
     app.players = app.gamePlayers.map((gp, index) => gp)
-    console.log(app.games)
-    console.log(app.gamePlayers)
-    console.log(app.players)
-
-
-
+//    console.log(app.games)
+//    console.log(app.gamePlayers)
+//    console.log(app.players)
   })
   .catch(e => console.log(`Error Capturado Fuera de la función async: ${e}`));
 
@@ -195,6 +193,11 @@ var app = new Vue({
                     $("#logout-form").hide()
                     location.reload()
                });
+        },
+
+        joinGame() {
+        console.log('diste click' + app.games)
+        location.href = "http://localhost:8080/web/game.html"
         },
 
         createGame() {}
