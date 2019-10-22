@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Salvo!</title>
@@ -28,7 +28,7 @@
     <div class="col-8">
         <ul v-for="game in games">
             <li v-if="game.gamePlayers.length == 2 ">{{game.created}} {{game.gamePlayers[0].player.userName}} {{game.gamePlayers[1].player.userName}}</li>
-            <li v-if="game.gamePlayers.length == 1">{{game.created}} {{game.gamePlayers[0].player.userName}} <button id="join" v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName" @click="joinGame">Join {{game.gamePlayers[0].player.userName}}</button></li>
+            <li v-if="game.gamePlayers.length == 1">{{game.created}} {{game.gamePlayers[0].player.userName}} <button :href="'http://localhost:8080/web/game.html/?gp=' + game.id" v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName" @click="joinGame">Join {{game.gamePlayers[0].player.userName}} - {{game.id}}</button></li>
         </ul>
         <ol class="list-group" id="game-list">
         </ol>

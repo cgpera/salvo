@@ -196,8 +196,9 @@ var app = new Vue({
         },
 
         joinGame() {
-        console.log('diste click' + app.games)
-        location.href = "http://localhost:8080/web/game.html"
+        console.log('diste click')
+        console.log(app.games)
+//        location.href = "http://localhost:8080/web/game.html"
         },
 
         createGame() {}
