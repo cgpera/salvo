@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:script="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <title>Salvo!</title>
@@ -9,11 +9,11 @@
 <body>
   <div id="app" class="container ml-3">
     <div class="row mt-5 mb-3">
-      <form id="login-form" v-if="player =='Guest'">
+      <form id="login-form" class="form-control my-3" v-if="player =='Guest'">
         <label>Name: <input type="email" name="username" id="username"></label>
         <label>Password: <input type="text" name="password" id="password"></label>
-        <button type="button" id="loginBut" @click="login()">Log in</button>
-        <button type="button" id="signBut">Register</button>
+        <button type="button" class="btn btn-primary" id="loginBut" @click="login()">Log in</button>
+        <button type="button" class="btn btn-secondary" id="signBut">Register</button>
       </form>
       <form id="logout-form" v-if="player != 'Guest'">
         <label><span id="login-name">Player: {{player.userName}}</span></label>
@@ -26,9 +26,11 @@
       <div id="app" class="col-8">
 -->
     <div class="col-8">
-        <ul v-for="game in games">
-            <li v-if="game.gamePlayers.length == 2 ">{{game.created}} {{game.gamePlayers[0].player.userName}} {{game.gamePlayers[1].player.userName}}</li>
-            <li v-if="game.gamePlayers.length == 1">{{game.created}} {{game.gamePlayers[0].player.userName}} <button :href="'http://localhost:8080/web/game.html/?gp=' + game.id" v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName" @click="joinGame">Join {{game.gamePlayers[0].player.userName}} - {{game.id}}</button></li>
+        <ul v-for="(game, index) in games">
+            <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 ">{{game.created}} {{game.gamePlayers[0].player.userName}} {{game.gamePlayers[1].player.userName}}</li>
+            <div class="d-flex justify-content-between">
+            <li class="alert alert-success" role="alert" v-if="game.gamePlayers.length == 1">{{game.created}} {{game.gamePlayers[0].player.userName}} <button class="btn btn-success" :href="'http://localhost:8080/web/game.html/?gp=' + game.id" v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName" @click="joinGame(game.id)">Join</button></li>
+            </div>
         </ul>
         <ol class="list-group" id="game-list">
         </ol>
@@ -45,7 +47,8 @@
   <script src="./js/popper.min.js"></script>
   <script src="./js/jquery-3.3.1.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+  <script src="./js/vue.js"></script>
   <script src="./js/gamesView.js"></script>
 </body>
 </html>

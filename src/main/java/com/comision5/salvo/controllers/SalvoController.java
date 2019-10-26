@@ -53,7 +53,7 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping("/games")
+    @RequestMapping(path="/games", method = RequestMethod.GET)
     public Map<String,Object> getGameAll(Authentication authentication){
         Map<String,  Object>  dto = new LinkedHashMap<>();
 
@@ -105,7 +105,7 @@ public class SalvoController {
     }
 
 
-    @RequestMapping("/game_view/{nn}")
+    @RequestMapping(path = "/game_view/{nn}", method = RequestMethod.GET)
     public Map<String, Object> GetGameByGamePlayerID(@PathVariable Long nn){
         GamePlayer gamePlayer = gamePlayerRepository.findById(nn).get();
         System.out.println(nn);
