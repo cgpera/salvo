@@ -10,13 +10,14 @@ function getParameterByName(name) {
 function loadData() {
   $.get('/api/game_view/' + getParameterByName('gp'))
     .done(function (data) {
+    console.log(data)
       var playerInfo;
       if (data.gamePlayers[0].id == getParameterByName('gp'))
         playerInfo = [data.gamePlayers[0].player, data.gamePlayers[1].player];
       else
         playerInfo = [data.gamePlayers[1].player, data.gamePlayers[0].player];
 
-      $('#playerInfo').text(playerInfo[0].email + '(you) vs ' + playerInfo[1].email);
+      $('#playerInfo').text(playerInfo[0].userName + '(you) vs ' + playerInfo[1].userName);
 
       data.ships.forEach(function (shipPiece) {
         shipPiece.locations.forEach(function (shipLocation) {

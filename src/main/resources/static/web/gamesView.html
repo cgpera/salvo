@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:script="http://www.w3.org/1999/html">
 <head>
-  <meta charset="UTF-8">
-  <title>Salvo!</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="./css/game.css">
+    <meta charset="UTF-8">
+    <title>Salvo!</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/game.css">
 </head>
 <body>
-  <div id="app" class="container ml-3">
-    <div class="row mt-5 mb-3">
-      <form id="login-form" class="form-control my-3" v-if="player =='Guest'">
-        <label>Name: <input type="email" name="username" id="username"></label>
-        <label>Password: <input type="text" name="password" id="password"></label>
-        <button type="button" class="btn btn-primary" id="loginBut" @click="login()">Log in</button>
-        <button type="button" class="btn btn-secondary" id="signBut">Register</button>
-      </form>
-      <form id="logout-form" v-if="player != 'Guest'">
-        <label><span id="login-name">Player: {{player.userName}}</span></label>
-        <button type="button" id="logoutBut" @click="logout()">Log out</button>
-      </form>
+<div id="app" class="container ml-3">
+    <div class="row mt-5 mb-3 ml-5">
+        <form id="login-form" class="form-control my-3" v-if="player =='Guest'">
+            <label>Name: <input type="email" name="username" id="username"></label>
+            <label>Password: <input type="text" name="password" id="password"></label>
+            <button type="button" class="btn btn-primary" id="loginBut" @click="login()">Log in</button>
+            <button type="button" class="btn btn-secondary" id="signBut">Register</button>
+        </form>
+        <form id="logout-form" v-if="player != 'Guest'" class="form-control">
+            <div class="d-flex justify-content-between">
+                <div id="login-name">Player: {{player.userName}}</div>
+                <button type="button" id="logoutBut" @click="logout()" class="btn btn-secondary">Log out</button>
+            </div>
+        </form>
     </div>
 
     <div class="row">
-<!--
-      <div id="app" class="col-8">
--->
-    <div class="col-8">
-        <ul v-for="(game, index) in games">
-            <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 ">{{game.created}} {{game.gamePlayers[0].player.userName}} {{game.gamePlayers[1].player.userName}}</li>
-            <div class="d-flex justify-content-between">
-            <li class="alert alert-success" role="alert" v-if="game.gamePlayers.length == 1">{{game.created}} {{game.gamePlayers[0].player.userName}} <button class="btn btn-success" :href="'http://localhost:8080/web/game.html/?gp=' + game.id" v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName" @click="joinGame(game.id)">Join</button></li>
-            </div>
-        </ul>
-        <ol class="list-group" id="game-list">
-        </ol>
-      </div>
-      <div class="col-4">
-        <table class="table table-striped table-dark tablaJugadores">
-          <tbody id="leader-list">
-          </tbody>
-        </table>
-      </div>
+        <div class="col-9">
+            <ul v-for="(game, index) in games">
+
+                <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 "><p class="text-white">
+                    {{game.created}}</p> {{game.gamePlayers[0].player.userName}} -
+                    {{game.gamePlayers[1].player.userName}}
+                </li>
+
+                <div class="alert alert-success d-flex justify-content-between" role="alert"
+                     v-if="game.gamePlayers.length == 1"><p class="text-danger">{{game.created}}
+                    {{game.gamePlayers[0].player.userName}}</p>
+                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html/?gp=' + game.id"
+                            v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName"
+                            @click="joinGame(game.id)">Join
+                    </button>
+                </div>
+
+            </ul>
+            <ol class="list-group" id="game-list">
+            </ol>
+        </div>
+        <div class="col-3">
+            <table class="table table-striped table-dark tablaJugadores">
+                <tbody id="leader-list">
+                </tbody>
+            </table>
+        </div>
     </div>
-      <button @click="createGame" id="createGame">Create New Game</button>
-  </div>
-  <script src="./js/popper.min.js"></script>
-  <script src="./js/jquery-3.3.1.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
-<!--  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-  <script src="./js/vue.js"></script>
-  <script src="./js/gamesView.js"></script>
+    <button @click="createGame" id="createGame" class="btn btn-outline-warning shadow ml-5 mb-3">Create New Game
+    </button>
+</div>
+<script src="./js/popper.min.js"></script>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/gamesView.js"></script>
 </body>
 </html>
