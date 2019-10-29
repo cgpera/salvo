@@ -27,7 +27,7 @@
         <div class="col-9">
             <ul v-for="(game, index) in games">
 
-                <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 "><p class="text-white">
+                <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 "><p class="text-dark">
                     {{game.created}}</p> {{game.gamePlayers[0].player.userName}} -
                     {{game.gamePlayers[1].player.userName}}
                 </li>
@@ -35,9 +35,9 @@
                 <div class="alert alert-success d-flex justify-content-between" role="alert"
                      v-if="game.gamePlayers.length == 1"><p class="text-danger">{{game.created}}
                     {{game.gamePlayers[0].player.userName}}</p>
-                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html/?gp=' + game.id"
+                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.gamePlayers[0].id"
                             v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName"
-                            @click="joinGame(game.id)">Join
+                            @click="joinGame(game.gamePlayers[0].id)">Join {{game.id}} {{game.gamePlayers[0].id}}
                     </button>
                 </div>
 

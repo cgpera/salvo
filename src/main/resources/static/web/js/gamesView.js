@@ -100,7 +100,7 @@ getGamesFromURL(url, init_str)
         app.playerGP = []
 //        console.log(index, elemento)
         app.playerGP = elemento.map((el, index) => el.player.userName)
-        console.log("player in gp " + app.playerGP)
+//        console.log("player in gp " + app.playerGP)
     })
     app.players = app.gamePlayers.map((gp, index) => gp)
 //    console.log(app.games)
@@ -197,7 +197,7 @@ var app = new Vue({
 
         joinGame(index) {
         console.log('diste click', index)
-        console.log("/web/game.html?gp=" + index)
+        console.log('game? ', index)
         location.href = "/web/game.html?gp=" + index
         },
 

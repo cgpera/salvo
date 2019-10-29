@@ -1,36 +1,39 @@
 $(document).ready(function () {
 
 //  var url = 'http://localhost:8080/api/games';
-var url = '/api/games';
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function makeUrl() {
+    var gamePlayerID =  getParameterByName("gp");
+    console.log(gamePlayerID)
+    return '/api/game_view/' + gamePlayerID;
+}
+
+var url = makeUrl();
+console.log(url)
   $.get(url, function (respuesta) {
     var items = [];
-    /*      $.each( respuesta, function( key, val ) {
-            items.push( "<li id='" + key + "'>" + JSON.stringify(val) + "</li>" );
-          });
 
-          $( "<ol/>", {
-            html: items.join( "" )
-          }).appendTo( "body" );
-    */
-
-    $.each(respuesta, function (key, val) {
-      var valor = JSON.stringify(val)
-      valid0 = val.gamePlayers[0]
-      valid1 = val.gamePlayers[1]
       items.push("<div class='divider'></div><div class='section'>");
-      items.push("<h5 class='blue-text text-darken-2'>Game " + key + "</h5>")
-      items.push(`<p class="card-panel teal lighten-2"> Game ID: ${val.id} Game Date Creation: ${val.created}</p>`)
+      items.push("<h5 class='blue-text text-darken-2'>Game " + respuesta.id + "</h5>")
+      items.push(`<p class="card-panel teal lighten-2"> Game ID: ${respuesta.id} Game Date Creation: ${respuesta.created}</p>`)
+    console.log("game id", respuesta.id)
+    console.log("game date creat", respuesta.created)
 
-      console.log(valid0)
-      if(valid0.player.id !== null) {
+      valid0 = respuesta.gamePlayers[0]
+      items.push("<div class='divider'></div><div class='section'>");
+      items.push(`<p class="card-panel teal lighten-2"> Game ID: ${respuesta.id} Game Date Creation: ${respuesta.created}</p>`)
+
+      console.log("user0", valid0)
+//      if(valid0 !== null) {
         items.push(`<p> User ID: ${valid0.player.id} User Name: ${valid0.player.userName}</p>`)
-      }
-      if(valid1.player.id !== null) {
-        items.push(`<p> User ID: ${valid1.player.id} User Name: ${valid1.player.userName}</p>`)
-      }
+//      }
       items.push("</div>")
-    });
-    $("<div/>", {
+//    });
+    $("</div>", {
       html: items.join("")
     }).appendTo("body");
   });
