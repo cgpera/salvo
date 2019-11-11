@@ -37,7 +37,7 @@
                     {{game.gamePlayers[0].player.userName}}</p>
                     <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.gamePlayers[0].id"
                             v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName"
-                            @click="joinGame(game.gamePlayers[0].id)">Join {{game.id}} {{game.gamePlayers[0].id}}
+                            @click="joinGame(game.gamePlayers[0].id)">Join {{player.id}} {{player.userName}} {{game.id}} {{game.gamePlayers[0].id}}
                     </button>
                 </div>
 
