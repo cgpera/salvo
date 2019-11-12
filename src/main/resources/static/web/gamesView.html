@@ -35,9 +35,9 @@
                 <div class="alert alert-success d-flex justify-content-between" role="alert"
                      v-if="game.gamePlayers.length == 1"><p class="text-danger">{{game.created}}
                     {{game.gamePlayers[0].player.userName}}</p>
-                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.gamePlayers[0].id"
+                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.id"
                             v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName"
-                            @click="joinGame(game.gamePlayers[0].id)">Join {{player.id}} {{player.userName}} {{game.id}} {{game.gamePlayers[0].id}}
+                            @click="joinGame(game.id)">Join {{player.id}} {{player.userName}} {{game.id}}
                     </button>
                 </div>
 

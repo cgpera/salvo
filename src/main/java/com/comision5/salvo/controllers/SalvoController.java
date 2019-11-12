@@ -87,21 +87,27 @@ public class SalvoController {
     }
 
     @RequestMapping(path = "/games/{id}/players", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long id,Authentication authentication ) {
+    public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long id, Authentication authentication ) {
         System.out.println(id);
         if(isGuest(authentication)){
             return new ResponseEntity<>(makeGameMap("not logged", -1L), HttpStatus.FORBIDDEN);
-        }else{
-            Player player  = playerRepository.findByUserName(authentication.getName()).get();
-            Date creationDate = new Date();
-            System.out.println(player);
-            System.out.println(creationDate);
-            Game game = gameRepository.findById(id).get();
-            System.out.println(game);
-            GamePlayer gamePlayer = new GamePlayer(creationDate, player, game);
-            gamePlayerRepository.save(gamePlayer);
-            return new ResponseEntity<>(makeGameMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
         }
+        if(!gameRepository.findById(id).isPresent()) {
+            return new ResponseEntity<>(makeGameMap("Game not exist", -1L), HttpStatus.FORBIDDEN);
+        }
+        Game game = gameRepository.findById(id).get();
+        if(game.getGamePlayers().size() == 2) {
+            return new ResponseEntity<>(makeGameMap("Game full", -1L), HttpStatus.FORBIDDEN);
+        }
+        Player player  = playerRepository.findByUserName(authentication.getName()).get();
+        boolean isMember = game.getGamePlayers().stream().filter(gamePlayer -> gamePlayer.getPlayer().getId().equals(player.getId())).findFirst().isPresent();
+        if(isMember) {
+            return new ResponseEntity<>(makeGameMap("Player can't join himself", -1L), HttpStatus.FORBIDDEN);
+        }
+        Date creationDate = new Date();
+        GamePlayer gamePlayer = new GamePlayer(creationDate, player, game);
+        gamePlayerRepository.save(gamePlayer);
+        return new ResponseEntity<>(makeGameMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
     }
 
 

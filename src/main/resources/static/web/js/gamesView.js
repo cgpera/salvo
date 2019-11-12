@@ -198,7 +198,15 @@ var app = new Vue({
         joinGame(index) {
         console.log('diste click', index)
         console.log('game? ', index)
-        location.href = "/web/game.html?gp=" + index
+        $.post("/api/games/" + index + "/players")
+        .done(function(data) {
+            console.log(data)
+            location.href = "/web/game.html?gp=" + data.gpid
+         })
+         .fail(function(error) {
+            console.log(error)
+         })
+
         },
 
         createGame() {}
