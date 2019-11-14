@@ -100,7 +100,8 @@ public class SalvoController {
             return new ResponseEntity<>(makeGameMap("Game full", -1L), HttpStatus.FORBIDDEN);
         }
         Player player  = playerRepository.findByUserName(authentication.getName()).get();
-        boolean isMember = game.getGamePlayers().stream().filter(gamePlayer -> gamePlayer.getPlayer().getId().equals(player.getId())).findFirst().isPresent();
+        boolean isMember = game.getGamePlayers().stream().anyMatch(gamePlayer -> gamePlayer.getPlayer().getId().equals(player.getId()));
+
         if(isMember) {
             return new ResponseEntity<>(makeGameMap("Player can't join himself", -1L), HttpStatus.FORBIDDEN);
         }
@@ -122,7 +123,7 @@ public class SalvoController {
         dto.put("created", gamePlayer.getGame().getCreationDate());
         dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers()
                                                     .stream()
-                                                    .map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO())
+                                                    .map(GamePlayer::makeGamePlayerDTO)
                                                     .collect(Collectors.toList())
         );
         dto.put("ships", gamePlayer.getShips()

@@ -27,18 +27,30 @@
         <div class="col-9">
             <ul v-for="(game, index) in games">
 
-                <li class="alert alert-primary" role="alert" v-if="game.gamePlayers.length == 2 "><p class="text-dark">
-                    {{game.created}}</p> {{game.gamePlayers[0].player.userName}} -
-                    {{game.gamePlayers[1].player.userName}}
-                </li>
+                <div  v-if="game.gamePlayers.length == 2" class="alert alert-success d-flex justify-content-between" role="alert">
+                    <li><p class="text-dark">
+                        {{game.created}} {{game.gamePlayers[0].player.userName}} -
+                        {{game.gamePlayers[1].player.userName}}</p>
+                        <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.id"
+                                v-if="player != 'Guest' && player.userName === game.gamePlayers[0].player.userName"
+                                @click="enterGame(game.gamePlayers[0].id)">Enter Game
+                        </button>
+                        <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.id"
+                                v-if="player != 'Guest' && player.userName === game.gamePlayers[1].player.userName"
+                                @click="enterGame(game.gamePlayers[1].id)">Enter Game
+                        </button>
+                    </li>
+                </div>
+
 
                 <div class="alert alert-success d-flex justify-content-between" role="alert"
-                     v-if="game.gamePlayers.length == 1"><p class="text-danger">{{game.created}}
-                    {{game.gamePlayers[0].player.userName}}</p>
+                     v-if="game.gamePlayers.length === 1"><p class="text-danger">
+                    {{game.created}} {{game.gamePlayers[0].player.userName}}</p>
                     <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.id"
                             v-if="player != 'Guest' && player.userName != game.gamePlayers[0].player.userName"
-                            @click="joinGame(game.id)">Join {{player.id}} {{player.userName}} {{game.id}}
+                            @click="joinGame(game.id)">Join
                     </button>
+
                 </div>
 
             </ul>
@@ -52,7 +64,8 @@
             </table>
         </div>
     </div>
-    <button @click="createGame" id="createGame" class="btn btn-outline-warning shadow ml-5 mb-3">Create New Game
+    <button @click="createGame" id="createGame" v-if="player != 'Guest'"
+            class="btn btn-outline-warning shadow ml-5 mb-3">Create New Game
     </button>
 </div>
 <script src="./js/popper.min.js"></script>

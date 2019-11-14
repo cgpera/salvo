@@ -209,7 +209,24 @@ var app = new Vue({
 
         },
 
-        createGame() {}
+        createGame() {
+        console.log("Crear juego")
+                $.post("/api/games/")
+                .done(function(data) {
+                    console.log(data.gpid)
+                    location.href = "/web/game.html?gp=" + data.gpid
+                 })
+                 .fail(function(error) {
+                    console.log(error)
+                 })
+
+        },
+
+        enterGame(index) {
+            location.href = "/web/game.html?gp=" + index
+        }
+
+
     }
 })
         function validar(user) {

@@ -19,15 +19,23 @@ console.log(url)
       items.push("<div class='divider'></div><div class='section'>");
       items.push("<h5 class='blue-text text-darken-2'>Game " + respuesta.id + "</h5>")
       items.push(`<p class="card-panel teal lighten-2"> Game ID: ${respuesta.id} Game Date Creation: ${respuesta.created}</p>`)
-
-      valid0 = respuesta.gamePlayers[0]
-      valid1 = respuesta.gamePlayers[1]
       items.push("<div class='divider'></div><div class='section'>");
 
-        items.push(`<p>User Name: ${valid0.player.userName}</p>`)
-        items.push(`<p>User Name: ${valid1.player.userName}</p>`)
+       user0 = respuesta.gamePlayers[0].player.userName
+
+    if(respuesta.gamePlayers.length == 2) {
+       user1 = respuesta.gamePlayers[1].player.userName
+      items.push(`<p>User Name: ${user0}</p>`)
+      items.push(`<p>User Name: ${user1}</p>`)
+      }
+    if(respuesta.gamePlayers.length == 1) {
+       user1 = ""
+      items.push(`<p>User Name: ${user0}</p>`)
+    }
+
+
       items.push("</div>")
-      $("#playerInfo").text(`${valid0.player.userName}  vs  ${valid1.player.userName}`);
+      $("#playerInfo").text(`${user0}    ${user1}`);
     $("<div></div>", {
       html: items.join("")
     }).appendTo("body");
