@@ -51,6 +51,14 @@
                             @click="joinGame(game.id)">Join
                     </button>
 
+                    <button class="btn btn-success" :href="'http://localhost:8080/web/game.html?gp=' + game.id"
+                            v-if="player != 'Guest' && player.userName === game.gamePlayers[0].player.userName"
+                            @click="enterGame(game.gamePlayers[0].id)">Enter Game
+<!--
+                            @click="joinGame(game.id)">Join
+-->
+                    </button>
+
                 </div>
 
             </ul>
