@@ -47,28 +47,12 @@ function loadData() {
     });
 }
 
-
-/*
-$(loginBut).click(function () {
-    login()
-})
-
-$(signBut).click(function () {
-    register()
-})
-
-$(logoutBut).click(function () {
-    logout()
-})
-*/
-
 /* VUE */
 
 const init_str = {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
-//    'X-API-Key': 'L6x2Gbl9kawrKwFw4kQp75kCXLgCQokZEtDC1zFN',
   },
   mode: 'cors',
 };
@@ -88,24 +72,15 @@ const getGamesFromURL = async (urlAddr, options) => {
 
 getGamesFromURL(url, init_str)
   .then(result => {
-//    app = result
     app.games = result.games
     app.player = result.player
-    console.log(app.player)
     app.gamePlayers = result.games.map(game => game.gamePlayers)
-    //app.players = app.gamePlayers.map((gp, index) => gp)
-
 
     app.gamePlayers.forEach(function(elemento, index) {
         app.playerGP = []
-//        console.log(index, elemento)
         app.playerGP = elemento.map((el, index) => el.player.userName)
-//        console.log("player in gp " + app.playerGP)
     })
     app.players = app.gamePlayers.map((gp, index) => gp)
-//    console.log(app.games)
-//    console.log(app.gamePlayers)
-//    console.log(app.players)
   })
   .catch(e => console.log(`Error Capturado Fuera de la función async: ${e}`));
 
@@ -132,7 +107,6 @@ var app = new Vue({
             $("#login-form").hide()
             location.reload()
             jugador = nombre
-            console.log(jugador)
             $("#login-name").text(nombre)
             $("#login-name").show()
             $("#logout-form").show()
@@ -181,7 +155,6 @@ var app = new Vue({
                         {   name: $("#username").val(),
                             pwd: $("#password").val() })
                         .done(function (data) {
-                            console.log("logged after signup")
                             return data
                         })
                 })
@@ -196,8 +169,6 @@ var app = new Vue({
         },
 
         joinGame(index) {
-        console.log('diste click', index)
-        console.log('game? ', index)
         $.post("/api/games/" + index + "/players")
         .done(function(data) {
             console.log(data)
@@ -210,8 +181,7 @@ var app = new Vue({
         },
 
         createGame() {
-        console.log("Crear juego")
-                $.post("/api/games/")
+            $.post("/api/games/")
                 .done(function(data) {
                     console.log(data.gpid)
                     location.href = "/web/game.html?gp=" + data.gpid
@@ -219,31 +189,26 @@ var app = new Vue({
                  .fail(function(error) {
                     console.log(error)
                  })
-
         },
-
         enterGame(index) {
             location.href = "/web/game.html?gp=" + index
         }
-
-
     }
 })
-        function validar(user) {
 
-            var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        //    return regex.test(user) ? true : false;
-            if( regex.test(user) == true) {
-                return user
-            }
-            else {
-                alert( "User not valid " + user + " , it must be a valid email address");
-                $("#username").val('')
-                $("#password").val('')
-                $("#login-form").show()
-                $("#logout-form").hide()
-                $("#register-form").show()
-                location.reload()
-                return false
-            }
-        }
+function validar(user) {
+    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if( regex.test(user) == true) {
+        return user
+    }
+    else {
+        alert( "User not valid " + user + " , it must be a valid email address");
+        $("#username").val('')
+        $("#password").val('')
+        $("#login-form").show()
+        $("#logout-form").hide()
+        $("#register-form").show()
+        location.reload()
+        return false
+    }
+}
