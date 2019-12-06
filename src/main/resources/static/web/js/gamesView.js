@@ -59,7 +59,6 @@ const init_str = {
 
 const url = '/api/games'
 
-
 const getGamesFromURL = async (urlAddr, options) => {
   try {
     const response = await fetch(urlAddr, options);
@@ -176,8 +175,7 @@ var app = new Vue({
          })
          .fail(function(error) {
             console.log(error)
-         })
-
+        })
         },
 
         createGame() {
