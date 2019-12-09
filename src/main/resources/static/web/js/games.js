@@ -23,9 +23,10 @@ $('#login-form').on('submit', function (event) {
                 console.log("login ok");
                 $('#loginSuccess').show( "slow" ).delay(2000).hide( "slow" );
                 $("#password").val("");
+                $("#currentPlayer").text(name)
+                console.log(name)
                 updateJson();
                 $("#createGameForm").show();
-
             })
             .fail(function() {
                 console.log("login failed");
