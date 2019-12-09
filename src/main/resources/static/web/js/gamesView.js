@@ -140,6 +140,9 @@ var app = new Vue({
         },
 
         register() {
+            if($("#username").val() == "") {
+                location.reload()
+            }
             validar($("#username").val())
             $.post("/api/players",
                 {   name: $("#username").val(),

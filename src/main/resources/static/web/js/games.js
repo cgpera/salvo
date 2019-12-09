@@ -22,7 +22,6 @@ $('#login-form').on('submit', function (event) {
             .done(function() {
                 console.log("login ok");
                 $('#loginSuccess').show( "slow" ).delay(2000).hide( "slow" );
-                // $("#username").val("");
                 $("#password").val("");
                 updateJson();
                 $("#createGameForm").show();
@@ -159,13 +158,15 @@ function updateView() {
         showScoreBoard(playersArray);
         if (data.player == "Guest") {
             $('#currentPlayer').text(data.player);
+            console.log("current player" + getElementById("currentPlayer"))
             $('#logout-form').hide("slow");
             $('#login-form').show("slow");
             $("#createGameForm").hide();
 
         } else {
 
-            $('#currentPlayer').text(data.player.email);
+            $('#currentPlayer').text(data.player.userName);
+//            $('#currentPlayer').show("slow")
             $('#login-form').hide("slow");
             $('#logout-form').show("slow");
 
@@ -193,13 +194,13 @@ function showGamesTable(gamesData) {
 
 
                 if (gamesData[i].gamePlayers.length == 2) {
-                    $('<td>' + gamesData[i].gamePlayers[j].player.email + '</td>').appendTo(row);
+                    $('<td>' + gamesData[i].gamePlayers[j].player.userName + '</td>').appendTo(row);
                 }
-                if (gamesData[i].gamePlayers.length == 1 && (data.player == "Guest" || data.player.id == gamesData[i].gamePlayers[j].player.id)) {
-                    $('<td>' + gamesData[i].gamePlayers[0].player.email + '</td><td class="yellow500">WAITING FOR PLAYER</td>').appendTo(row);
+                if (gamesData[i].gamePlayers.length == 1 && (data.userName == "Guest" || data.player.id == gamesData[i].gamePlayers[j].player.id)) {
+                    $('<td>' + gamesData[i].gamePlayers[0].player.userName + '</td><td class="yellow500">WAITING FOR PLAYER</td>').appendTo(row);
                 }
                 if (gamesData[i].gamePlayers.length == 1 && data.player.id != null && data.player.id != gamesData[i].gamePlayers[j].player.id) {
-                    $('<td>' + gamesData[i].gamePlayers[0].player.email + '</td><td class="yellow500">WAITING FOR PLAYER</td>').appendTo(row);
+                    $('<td>' + gamesData[i].gamePlayers[0].player.userName + '</td><td class="yellow500">WAITING FOR PLAYER</td>').appendTo(row);
                     joinButtonHtml = '<td class="textCenter"><button class="joinGameButton btn btn-info" data-gameid=' + '"' + gamesData[i].id + '"' + '>JOIN GAME</button></td>';
 
                 }
@@ -260,7 +261,7 @@ function getPlayers(gamesData) {
                     playersIds.push(gamesData[i].gamePlayers[j].player.id);
                     var playerScoreData = {
                         "id": gamesData[i].gamePlayers[j].player.id,
-                        "email": gamesData[i].gamePlayers[j].player.email,
+                        "email": gamesData[i].gamePlayers[j].player.userName,
                         "scores": [],
                         "total": 0.0
                     };
@@ -315,7 +316,7 @@ function showScoreBoard(playersArray) {
                 }
 
                 var row = $('<tr></tr>').appendTo(table);
-                $('<td>' + playersArray[m].email + '</td>').appendTo(row);
+                $('<td>' + playersArray[m].userName + '</td>').appendTo(row);
                 $("<td class='textCenter'>" + playersArray[m].total.toFixed(1) + '</td>').appendTo(row);
                 $("<td class='textCenter'>" + countWon + '</td>').appendTo(row);
                 $("<td class='textCenter'>" + countLost + '</td>').appendTo(row);
