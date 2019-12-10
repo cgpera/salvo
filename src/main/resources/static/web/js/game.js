@@ -25,7 +25,8 @@ $('#logoutButton').on('click', function (event) {
             setTimeout(
                 function()
                 {
-                    location.href = "/web/games.html";
+//                    location.href = "/web/games.html";
+                    location.href = "/web/gamesView.html";
                 }, 3000);
         })
         .fail(function () {
@@ -181,10 +182,10 @@ function showSelf (gamePlayerData) {
 
     gamePlayerData.gamePlayers.forEach(function(gamePlayer) {
         if (gamePlayer.id == getParameterByName("gp")) {
-            you = gamePlayer.player.email;
+            you = gamePlayer.player.userName;
             youID = gamePlayer.player.id;
         } else {
-            viewer = gamePlayer.player.email;
+            viewer = gamePlayer.player.userName;
             $('#OpponentPlayerName').removeClass('waitingPlayer');
         }
     });
@@ -494,6 +495,7 @@ function addDamagesIcons (numberOfHits, hitOrMissed) {
 }
 
 function getTurn(gamePlayerData) {
+console.log("gpdata", gamePlayerData)
     let turn;
     if (gamePlayerData.hits.self.length < gamePlayerData.hits.opponent.length) {
         turn = gamePlayerData.hits.opponent.length;

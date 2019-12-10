@@ -157,6 +157,7 @@ var app = new Vue({
                         {   name: $("#username").val(),
                             pwd: $("#password").val() })
                         .done(function (data) {
+                            location.reload()
                             return data
                         })
                 })

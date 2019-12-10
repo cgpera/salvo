@@ -1,11 +1,13 @@
 package com.comision5.salvo.controllers;
 
+import com.comision5.salvo.models.Salvo;
 import com.comision5.salvo.repositories.PlayerRepository;
 import com.comision5.salvo.models.Game;
 import com.comision5.salvo.models.GamePlayer;
 import com.comision5.salvo.models.Player;
 import com.comision5.salvo.repositories.GamePlayerRepository;
 import com.comision5.salvo.repositories.GameRepository;
+import com.comision5.salvo.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -153,6 +155,31 @@ public class SalvoController {
 
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
+    }
+
+    @RequestMapping(path = "/games/players/{gpid}/salvoes", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addSalvo(@PathVariable Long gpid, @RequestBody Salvo salvo, Authentication authentication ) {
+//        System.out.println(gpid);
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(Util.makeMap("Error", "not logged"), HttpStatus.UNAUTHORIZED);
+        }
+
+        Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
+        if(player == null) {
+            return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.UNAUTHORIZED);
+        }
+
+        GamePlayer selfPlayer = gamePlayerRepository.getOne(gpid);
+        if(selfPlayer == null) {
+            return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.UNAUTHORIZED);
+        }
+
+        if(!player.getId().equals(selfPlayer.getPlayer().getId())) {
+            return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.FORBIDDEN);
+        }
+
+        //GamePlayer opponent = selfPlayer.getPlayer().getGamePlayers().
+        return null; // 
     }
 
     private Map<String, Object> makeGameMap(String key, Object value) {

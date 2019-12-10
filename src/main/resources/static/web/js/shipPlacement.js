@@ -36,7 +36,6 @@ $(function() {
         acceptWidgets: '.salvoShot'
     };
 
-
     $('#grid1').gridstack(options);
 
 
