@@ -153,10 +153,7 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-    private boolean isGuest(Authentication authentication) {
-        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
-    }
-
+/*
     @RequestMapping(path = "/games/players/{gpid}/salvoes", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> addSalvo(@PathVariable Long gpid, @RequestBody Salvo salvo, Authentication authentication ) {
 //        System.out.println(gpid);
@@ -175,11 +172,16 @@ public class SalvoController {
         }
 
         if(!player.getId().equals(selfPlayer.getPlayer().getId())) {
-            return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "User not that init session"), HttpStatus.FORBIDDEN);
         }
 
         //GamePlayer opponent = selfPlayer.getPlayer().getGamePlayers().
-        return null; // 
+        return null; //
+    }
+*/
+
+    private boolean isGuest(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 
     private Map<String, Object> makeGameMap(String key, Object value) {

@@ -180,7 +180,7 @@ var app = new Vue({
          .fail(function(error) {
             console.log(error)
         })
-        },
+    },
 
         createGame() {
             $.post("/api/games/")

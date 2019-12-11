@@ -8,9 +8,8 @@ var dataShips = JSON.stringify(
         {type: "BattleShip", locations: ["D6", "E6", "F6", "G6", "H6"]}
         ])
 
-function postShips(gameId) {
-    console.log(dataShips)
-    $.post("/api/games/players/" + gameId + "/ships", dataShips)
+    $.post({url: "/api/games/players/" + gameId + "/ships", data: dataShips, dataType: "text",
+        contentType: "application/json"})
     .done(function (response, status, jqXHR) {
       alert( "Ship added: " + response );
       // app.ships = response.
@@ -19,7 +18,3 @@ function postShips(gameId) {
       alert("Failed to add ship: " + status + " " + httpError);
     })
 }
-
-$(function() {
-    postShips(game)
-});
