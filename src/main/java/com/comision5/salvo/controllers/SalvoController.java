@@ -7,6 +7,7 @@ import com.comision5.salvo.models.GamePlayer;
 import com.comision5.salvo.models.Player;
 import com.comision5.salvo.repositories.GamePlayerRepository;
 import com.comision5.salvo.repositories.GameRepository;
+import com.comision5.salvo.repositories.SalvoRepository;
 import com.comision5.salvo.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,10 @@ public class SalvoController {
     @Autowired
     private PlayerRepository playerRepository;
 
-    private Player player;
+    @Autowired
+    private SalvoRepository salvoRepository;
+
+//    private Player player;
 
 /*
     @RequestMapping("/games")
@@ -121,6 +125,7 @@ public class SalvoController {
         System.out.println(gamePlayer.getId());
         System.out.println(gamePlayer.getGame().getId());
         Map<String, Object> dto = new LinkedHashMap<>();
+        Map<String, Object> hit = new LinkedHashMap<>();
         dto.put("id", gamePlayer.getGame().getId());
         dto.put("created", gamePlayer.getGame().getCreationDate());
         dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers()
@@ -142,6 +147,10 @@ public class SalvoController {
                                                 )
                                                 .collect(Collectors.toList())
         );
+        hit.put("self", new getHits());
+        hit.put("opponent", new ArrayList<>());
+        dto.put("hits", hit);
+        dto.put("gameState", "PLACESHIPS");
         return dto;
     }
 
@@ -153,32 +162,37 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-/*
+
     @RequestMapping(path = "/games/players/{gpid}/salvoes", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> addSalvo(@PathVariable Long gpid, @RequestBody Salvo salvo, Authentication authentication ) {
-//        System.out.println(gpid);
-        if(isGuest(authentication)){
+        if (isGuest(authentication)) {
             return new ResponseEntity<>(Util.makeMap("Error", "not logged"), HttpStatus.UNAUTHORIZED);
         }
 
         Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
-        if(player == null) {
+        if (player == null) {
             return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.UNAUTHORIZED);
         }
 
         GamePlayer selfPlayer = gamePlayerRepository.getOne(gpid);
-        if(selfPlayer == null) {
+        if (selfPlayer == null) {
             return new ResponseEntity<>(Util.makeMap("Error", "User not authorized"), HttpStatus.UNAUTHORIZED);
         }
 
-        if(!player.getId().equals(selfPlayer.getPlayer().getId())) {
+        if (!player.getId().equals(selfPlayer.getPlayer().getId())) {
             return new ResponseEntity<>(Util.makeMap("Error", "User not that init session"), HttpStatus.FORBIDDEN);
         }
 
-        //GamePlayer opponent = selfPlayer.getPlayer().getGamePlayers().
-        return null; //
+        GamePlayer opponent = getOpponent(selfPlayer);
+        if(selfPlayer.getSalvoes().size() <= opponent.getSalvoes().size()) {
+            salvo.setTurn(selfPlayer.getSalvoes().size()+1);
+            salvo.setGamePlayer(selfPlayer);
+            salvoRepository.save(salvo);
+        }
+        return new ResponseEntity<>(Util.makeMap("Salvo Created", "Salvo OK"), HttpStatus.CREATED);
     }
-*/
+
+
 
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
@@ -188,5 +202,13 @@ public class SalvoController {
         Map<String, Object> map = new HashMap<>();
         map.put(key, value);
         return map;
+    }
+
+    private GamePlayer getOpponent(GamePlayer self) {
+        return self.getGame().getGamePlayers().stream().filter(gamePlayer -> gamePlayer.getId() != self.getId()).findFirst().orElse(new GamePlayer());
+    }
+
+    private List<Map> getHits(GamePlayer self, GamePlayer opp) {
+        
     }
 }

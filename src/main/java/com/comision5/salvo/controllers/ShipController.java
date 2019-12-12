@@ -48,8 +48,8 @@ public class ShipController {
         if (!gamePlayer.getShips().isEmpty()) {
             return new ResponseEntity<Object>("Ships already in Game", HttpStatus.FORBIDDEN);
         }
-        if(gamePlayer.getShips().size() != 5) {
-            return new ResponseEntity<Object>("Ships in Game not enough of too many", HttpStatus.FORBIDDEN);
+        if(ships.size() != 5) {
+            return new ResponseEntity<Object>("Ships in Game not enough or too many", HttpStatus.FORBIDDEN);
         }
 
         ships.forEach(ship -> {
