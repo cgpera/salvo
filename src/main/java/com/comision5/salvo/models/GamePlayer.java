@@ -31,12 +31,18 @@ public class GamePlayer {
     private Set<Salvo> salvoes;
 
 
-    public GamePlayer(){}
+    public GamePlayer(){
+        this.joinDate = new Date();
+        this.ships  = new HashSet<>();
+        this.salvoes  = new HashSet<>();
+    }
 
-    public GamePlayer(Date joinDate, Player player, Game game) {
-        this.joinDate = joinDate;
+    public GamePlayer(Player player, Game game) {
+        this.joinDate = new Date();
         this.player = player;
         this.game = game;
+        this.ships  = new HashSet<>();
+        this.salvoes  = new HashSet<>();
     }
 
     public long getId() {
@@ -51,7 +57,7 @@ public class GamePlayer {
         this.joinDate = joinDate;
     }
 
-    @JsonIgnore
+//    @JsonIgnore
     public Player getPlayer() {
         return player;
     }
@@ -60,9 +66,17 @@ public class GamePlayer {
         return ships;
     }
 
-    @JsonIgnore
+//    @JsonIgnore
     public Game getGame() {
         return game;
+    }
+
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
+    }
+
+    public void setSalvoes(Set<Salvo> salvoes) {
+        this.salvoes = salvoes;
     }
 
     public void setGame(Game game) {
@@ -74,13 +88,12 @@ public class GamePlayer {
     }
 
     public Optional<Score>  getScore(){
-        return  this.getPlayer().getScore(this.getGame());
-    }
+        return this.getPlayer().getScore(this.getGame());}
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getId());
-        dto.put("joinDate", this.getJoinDate());
+//        dto.put("joinDate", this.getJoinDate());
         dto.put("player", this.getPlayer().makePlayerDTO());
         return dto;
     }

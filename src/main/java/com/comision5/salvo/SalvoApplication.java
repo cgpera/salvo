@@ -71,33 +71,33 @@ public class SalvoApplication { // extends SpringBootServletInitializer {
 			gameRepository.save(game8);
 
 
-			GamePlayer gamePlayer1 = new GamePlayer(date, player1, game1);
+			GamePlayer gamePlayer1 = new GamePlayer(player1, game1);
 			gamePlayerRepository.save(gamePlayer1);
-			GamePlayer gamePlayer2 = new GamePlayer(new Date(), player2, game1);
+			GamePlayer gamePlayer2 = new GamePlayer(player2, game1);
 			gamePlayerRepository.save(gamePlayer2);
-			GamePlayer gamePlayer3 = new GamePlayer(new Date(), player1, game2);
+			GamePlayer gamePlayer3 = new GamePlayer(player1, game2);
 			gamePlayerRepository.save(gamePlayer3);
-			GamePlayer gamePlayer4 = new GamePlayer(new Date(), player2, game2);
+			GamePlayer gamePlayer4 = new GamePlayer(player2, game2);
 			gamePlayerRepository.save(gamePlayer4);
-			GamePlayer gamePlayer5 = new GamePlayer(new Date(), player2, game3);
+			GamePlayer gamePlayer5 = new GamePlayer(player2, game3);
 			gamePlayerRepository.save(gamePlayer5);
-			GamePlayer gamePlayer6 = new GamePlayer(new Date(), player4, game3);
+			GamePlayer gamePlayer6 = new GamePlayer(player4, game3);
 			gamePlayerRepository.save(gamePlayer6);
-			GamePlayer gamePlayer7 = new GamePlayer(date, player2, game4);
+			GamePlayer gamePlayer7 = new GamePlayer(player2, game4);
 			gamePlayerRepository.save(gamePlayer7);
-			GamePlayer gamePlayer8 = new GamePlayer(new Date(), player1, game4);
+			GamePlayer gamePlayer8 = new GamePlayer(player1, game4);
 			gamePlayerRepository.save(gamePlayer8);
-			GamePlayer gamePlayer9 = new GamePlayer(new Date(), player4, game5);
+			GamePlayer gamePlayer9 = new GamePlayer(player4, game5);
 			gamePlayerRepository.save(gamePlayer9);
-			GamePlayer gamePlayer10 = new GamePlayer(new Date(), player1, game5);
+			GamePlayer gamePlayer10 = new GamePlayer(player1, game5);
 			gamePlayerRepository.save(gamePlayer10);
-			GamePlayer gamePlayer11 = new GamePlayer(new Date(), player3, game6);
+			GamePlayer gamePlayer11 = new GamePlayer(player3, game6);
 			gamePlayerRepository.save(gamePlayer11);
-			GamePlayer gamePlayer12 = new GamePlayer(new Date(), player4, game7);
+			GamePlayer gamePlayer12 = new GamePlayer(player4, game7);
 			gamePlayerRepository.save(gamePlayer12);
-			GamePlayer gamePlayer13 = new GamePlayer(new Date(), player3, game8);
+			GamePlayer gamePlayer13 = new GamePlayer(player3, game8);
 			gamePlayerRepository.save(gamePlayer13);
-			GamePlayer gamePlayer14 = new GamePlayer(new Date(), player4, game8);
+			GamePlayer gamePlayer14 = new GamePlayer(player4, game8);
 			gamePlayerRepository.save(gamePlayer14);
 
 			String carrier = "carrier";
