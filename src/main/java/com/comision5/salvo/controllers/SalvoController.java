@@ -1,10 +1,7 @@
 package com.comision5.salvo.controllers;
 
-import com.comision5.salvo.models.Salvo;
+import com.comision5.salvo.models.*;
 import com.comision5.salvo.repositories.*;
-import com.comision5.salvo.models.Game;
-import com.comision5.salvo.models.GamePlayer;
-import com.comision5.salvo.models.Player;
 import com.comision5.salvo.utils.GameState;
 import com.comision5.salvo.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +39,6 @@ public class SalvoController {
 
 //    private Player player;
 
-/*
-    @RequestMapping("/games")
-    public List<Map<String, Object>> getGames() {
-         return gameRepository
-                .findAll()
-                .stream()
-                .map(game -> game.makeGameDTO())
-                .collect(Collectors.toList());
-    }
-*/
 
     private List<Map<String, Object>> getGamePlayerListDTO(Set<GamePlayer> gamePlayers) {
         return gamePlayers
@@ -59,6 +46,7 @@ public class SalvoController {
                 .map(gamePlayerList ->  gamePlayerList.makeGamePlayerDTO())
                 .collect(Collectors.toList());
     }
+
 
     @RequestMapping(path="/games", method = RequestMethod.GET)
     public Map<String,Object> getGameAll(Authentication authentication){
@@ -77,6 +65,7 @@ public class SalvoController {
                 .collect(Collectors.toList()));
         return dto;
     }
+
 
     @RequestMapping(path = "/games", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> createGame(Authentication authentication) {
@@ -97,20 +86,21 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long id, Authentication authentication ) {
         System.out.println(id);
         if(isGuest(authentication)){
-            return new ResponseEntity<>(makeGameMap("not logged", -1L), HttpStatus.FORBIDDEN);
+//            return new ResponseEntity<>(makeGameMap("not logged", -1L), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "not logged"), HttpStatus.FORBIDDEN);
         }
         if(!gameRepository.findById(id).isPresent()) {
-            return new ResponseEntity<>(makeGameMap("Game not exist", -1L), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "Game not exist"), HttpStatus.FORBIDDEN);
         }
         Game game = gameRepository.findById(id).get();
         if(game.getGamePlayers().size() == 2) {
-            return new ResponseEntity<>(makeGameMap("Game full", -1L), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "Game full"), HttpStatus.FORBIDDEN);
         }
         Player player  = playerRepository.findByUserName(authentication.getName()).get();
         boolean isMember = game.getGamePlayers().stream().anyMatch(gamePlayer -> gamePlayer.getPlayer().getId().equals(player.getId()));
 
         if(isMember) {
-            return new ResponseEntity<>(makeGameMap("Player can't join himself", -1L), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeGameMap("Error", "Player can't join himself"), HttpStatus.FORBIDDEN);
         }
         Date creationDate = new Date();
         GamePlayer gamePlayer = new GamePlayer(player, game);
@@ -355,7 +345,8 @@ public class SalvoController {
     }
 
     private List<String>  getLocationsByType(String type, GamePlayer self){
-        return  self.getShips().size()  ==  0 ? new ArrayList<>() : self.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().get().getShipLocations();
+        return  self.getShips().size()  ==  0 ? new ArrayList<>() : self.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().orElse(new Ship()).getShipLocations();
+//        return  self.getShips().size()  ==  0 ? new ArrayList<>() : self.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().get().getShipLocations();
     }
 
     private Boolean getIfAllSunk (GamePlayer self, GamePlayer opponent) {

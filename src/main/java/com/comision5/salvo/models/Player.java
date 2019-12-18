@@ -75,6 +75,7 @@ public class Player {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getId());
         dto.put("userName", this.getUserName());
+//        dto.put("player", this.getUserName());
 //        dto.put("password", this.getPassword());
         return dto;
     }

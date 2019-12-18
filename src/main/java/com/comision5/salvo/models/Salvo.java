@@ -17,7 +17,7 @@ public class Salvo {
     private int turn;
 
     @ElementCollection
-    @Column(name="shipLocations")
+    @Column(name="salvoLocations")
     private List<String> salvoLocations;
 //    private Set<String> salvoLocations;
 

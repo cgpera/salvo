@@ -16,10 +16,13 @@ public class Game {
     private Date creationDate;
 
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    private Set<GamePlayer> gamePlayers = new HashSet<>();
+    //private Set<GamePlayer> gamePlayers = new HashSet<>();
+//    Set<GamePlayer> gamePlayers = new HashSet<>();
+    Set<GamePlayer> gamePlayers;
 
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    private Set<Score> scores;
+    //private Set<Score> scores;
+    Set<Score> scores;
 
     public Game() {}
 

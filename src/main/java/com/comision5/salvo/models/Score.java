@@ -26,11 +26,13 @@ public class Score {
     @JoinColumn(name = "playerID")
     private Player player;
 
-    public Score(){};
+    public Score(){
+        this.finishDate = new Date();
+    }
 
-    public Score(double score, Date finishDate, Game game, Player player) {
+    public Score(Double score, Date finDate, Game game, Player player) {
         this.score = score;
-        this.finishDate = finishDate;
+        this.finishDate = finDate;
         this.game = game;
         this.player = player;
     }
