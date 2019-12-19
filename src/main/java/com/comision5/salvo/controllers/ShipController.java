@@ -37,25 +37,25 @@ public class ShipController {
 
 
         if (Util.isGuest(authentication)) {
-            return new ResponseEntity<>("User not logged", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Util.makeMap("Error", "User not logged"), HttpStatus.UNAUTHORIZED);
         }
 
         GamePlayer gamePlayer = gamePlayerRepository.findById(gamePlayerId).orElse(null);
         if (gamePlayer == null) {
-            return new ResponseEntity<Object>("User not exist", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<Object>(Util.makeMap("Error", "User not exist"), HttpStatus.UNAUTHORIZED);
         }
 
         if (!gamePlayer.getShips().isEmpty()) {
-            return new ResponseEntity<Object>("Ships already in Game", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<Object>(Util.makeMap("Error", "Ships already in Game"), HttpStatus.FORBIDDEN);
         }
         if(ships.size() != 5) {
-            return new ResponseEntity<Object>("Ships in Game not enough or too many", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<Object>(Util.makeMap("Error", "Ships in Game not enough or too many"), HttpStatus.FORBIDDEN);
         }
 
         ships.forEach(ship -> {
                 ship.setGamePlayer(gamePlayer);
                 shipRepository.save(ship);
             });
-        return new ResponseEntity<Object>("Ships in Game", HttpStatus.CREATED);
+        return new ResponseEntity<Object>(Util.makeMap("OK", "Ships in Game"), HttpStatus.CREATED);
     }
 }
