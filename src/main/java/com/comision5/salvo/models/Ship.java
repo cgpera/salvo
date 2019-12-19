@@ -3,10 +3,7 @@ package com.comision5.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Ship {
@@ -26,7 +23,9 @@ public class Ship {
   private GamePlayer gamePlayer;
 
 
-  public Ship(){};
+  public Ship(){
+    this.shipLocations  = new ArrayList<>();
+  };
 
   public Ship(GamePlayer gamePlayer, String type, List<String> shipLocations) {
     this.type = type;

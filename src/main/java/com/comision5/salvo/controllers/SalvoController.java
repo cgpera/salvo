@@ -1,10 +1,7 @@
 package com.comision5.salvo.controllers;
 
-import com.comision5.salvo.models.Salvo;
+import com.comision5.salvo.models.*;
 import com.comision5.salvo.repositories.*;
-import com.comision5.salvo.models.Game;
-import com.comision5.salvo.models.GamePlayer;
-import com.comision5.salvo.models.Player;
 import com.comision5.salvo.utils.GameState;
 import com.comision5.salvo.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -355,7 +352,7 @@ public class SalvoController {
     }
 
     private List<String>  getLocationsByType(String type, GamePlayer self){
-        return  self.getShips().size()  ==  0 ? new ArrayList<>() : self.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().get().getShipLocations();
+        return  self.getShips().size()  ==  0 ? new ArrayList<>() : self.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().orElse(new Ship()).getShipLocations();
     }
 
     private Boolean getIfAllSunk (GamePlayer self, GamePlayer opponent) {
