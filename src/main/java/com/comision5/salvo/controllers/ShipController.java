@@ -56,5 +56,6 @@ public class ShipController {
                 ship.setGamePlayer(gamePlayer);
                 shipRepository.save(ship);
             });
+	    return new ResponseEntity<Object>(Util.makeMap("OK","Ships in Game"), HttpStatus.CREATED);
     }
 }
