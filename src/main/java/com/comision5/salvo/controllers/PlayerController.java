@@ -4,6 +4,7 @@ import com.comision5.salvo.repositories.PlayerRepository;
 import com.comision5.salvo.models.Player;
 import com.comision5.salvo.repositories.GamePlayerRepository;
 import com.comision5.salvo.repositories.GameRepository;
+import com.comision5.salvo.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,15 +32,15 @@ public class PlayerController {
     @RequestMapping(path = "/players", method = RequestMethod.POST)
     public ResponseEntity<Object> register(@RequestParam String name, @RequestParam String pwd) {
         if (name.isEmpty() || pwd.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "Missing data"), HttpStatus.FORBIDDEN);
         }
 
         if (playerRepository.findByUserName(name).orElse(null) != null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("Error", "Name already in use"), HttpStatus.FORBIDDEN);
         }
 
         playerRepository.save(new Player(name, passwordEncoder.encode(pwd)));
-        return new ResponseEntity<>("user created", HttpStatus.CREATED);
+        return new ResponseEntity<>(Util.makeMap("OK", "user created"), HttpStatus.CREATED);
     }
 
 /*    @RequestMapping("/players")
