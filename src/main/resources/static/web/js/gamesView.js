@@ -174,7 +174,7 @@ var app = new Vue({
         joinGame(index) {
         $.post("/api/games/" + index + "/players")
         .done(function(data) {
-            console.log(data)
+            console.log(data.gpid)
             location.href = "/web/game.html?gp=" + data.gpid
          })
          .fail(function(error) {
@@ -193,6 +193,7 @@ var app = new Vue({
                  })
         },
         enterGame(index) {
+            console.log(data.gpid)
             location.href = "/web/game.html?gp=" + index
         }
     }
